@@ -99,6 +99,13 @@
     };
   }
 
+  /** Valores como estão nos campos (sem resolver "igual à camisa"), para guardar rascunho. */
+  function lerBruto(linha) {
+    const d = {};
+    ['tamanho', 'nome', 'numero', 'posicao', 'tamCalcao', 'variante'].forEach(n => { const c = linha.querySelector(`[name="${n}"]`); if (c) d[n] = c.value; });
+    return d;
+  }
+
   /** Confere uma pessoa; marca os campos com problema e devolve as mensagens. */
   function validarLinha(produto, linha, prefixo) {
     const u = lerLinha(linha); const erros = [];
@@ -120,5 +127,5 @@
     return partes.join(' · ');
   }
 
-  LOJA.pessoas = { criarLinha, renumerar, lerLinha, validarLinha, descrever };
+  LOJA.pessoas = { criarLinha, renumerar, lerLinha, lerBruto, validarLinha, descrever };
 })();

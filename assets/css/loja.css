@@ -50,7 +50,7 @@
 .hero::before { /* faixa diagonal autoral: bordô e branco sobre o azul */
   content: ""; position: absolute; inset: -20% -10% auto auto; width: 70%; height: 160%;
   background: linear-gradient(115deg, transparent 0 38%, var(--everest-bordo) 38% 52%, transparent 52% 56%, rgba(255,255,255,.14) 56% 60%, transparent 60%);
-  transform: translateX(0); animation: faixa-entra 1.1s var(--curva) both;
+  transform: translateX(0);
 }
 @keyframes faixa-entra { from { transform: translateX(18%); opacity: 0; } to { transform: none; opacity: 1; } }
 .hero__grade { position: relative; display: grid; grid-template-columns: 1.05fr 1fr; gap: var(--esp-6); align-items: center; padding: var(--esp-8) 0 calc(var(--esp-8) + var(--onda-altura) * .6); }
@@ -59,7 +59,27 @@
 .hero__selo { display: inline-block; margin-bottom: var(--esp-4); padding: var(--esp-1) var(--esp-3); border: 1px solid rgba(255,255,255,.5); border-radius: 999px; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
 .hero__texto { font-size: 1.15rem; max-width: 34rem; color: #e8ebf5; }
 .hero__acoes { display: flex; flex-wrap: wrap; gap: var(--esp-3); margin-top: var(--esp-5); }
-.hero__imagem { background: #f1f1f1; border-radius: var(--raio-grande); overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,.35); transform: rotate(-1.5deg); animation: hero-sobe .9s .15s var(--curva) both; }
+.hero__imagem { position: relative; margin: 0; background: #f1f1f1; border-radius: var(--raio-grande); overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,.35); transform: rotate(-1.5deg); }
+/* animação do hero: a classe hero--anima é posta pelo script (ao carregar, no clique e ao voltar ao topo) */
+.hero.hero--anima::before { animation: faixa-entra 1.1s var(--curva) both; }
+.hero--anima .hero__imagem { animation: hero-sobe .9s .15s var(--curva) both; }
+.hero--anima .hero__selo, .hero--anima h1, .hero--anima .hero__texto, .hero--anima .hero__acoes { animation: texto-sobe .7s var(--curva) both; }
+.hero--anima h1 { animation-delay: .08s; }
+.hero--anima .hero__texto { animation-delay: .18s; }
+.hero--anima .hero__acoes { animation-delay: .28s; }
+@keyframes texto-sobe { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.hero__link { display: block; position: relative; color: inherit; text-decoration: none; cursor: pointer; }
+.hero__slides { display: grid; overflow: hidden; }
+.hero__slide { grid-area: 1 / 1; width: 100%; height: auto; opacity: 0; transform: scale(1.06) translateX(14px); transition: opacity .8s var(--curva), transform 1.4s var(--curva); }
+.hero__slide.ativo { opacity: 1; transform: none; }
+.hero__link:hover .hero__slide.ativo, .hero__link:focus-visible .hero__slide.ativo { transform: scale(1.03); }
+.hero__chamada { position: absolute; right: var(--esp-4); bottom: var(--esp-4); padding: var(--esp-2) var(--esp-4); border-radius: 999px; background: var(--everest-bordo); color: #fff; font-weight: 700; font-size: .9rem; opacity: 0; transform: translateY(8px); transition: opacity var(--tempo) var(--curva), transform var(--tempo) var(--curva); }
+.hero__link:hover .hero__chamada, .hero__link:focus-visible .hero__chamada { opacity: 1; transform: none; }
+@media (hover: none) { .hero__chamada { opacity: 1; transform: none; } }
+.hero__legenda { display: flex; justify-content: space-between; align-items: center; gap: var(--esp-3); }
+.hero__pontos { display: flex; gap: 6px; flex: none; }
+.hero__ponto { width: 12px; height: 12px; padding: 0; border-radius: 50%; border: 2px solid var(--everest-azul); background: transparent; cursor: pointer; }
+.hero__ponto[aria-pressed="true"] { background: var(--everest-azul); }
 @keyframes hero-sobe { from { transform: translateY(30px) rotate(-1.5deg); opacity: 0; } to { transform: rotate(-1.5deg); opacity: 1; } }
 .hero__legenda { margin: 0; padding: var(--esp-2) var(--esp-4); background: #fff; color: var(--cor-texto-suave); font-size: .85rem; }
 
@@ -283,6 +303,17 @@ html.com-abertura .abertura { display: block; position: fixed; inset: 0; z-index
 .medidas__letra { display: inline-grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 50%; background: var(--everest-bordo); color: #fff; font-size: .8rem; }
 .medidas__avisos { margin: var(--esp-4) 0 0; padding-left: 1.2rem; color: var(--cor-texto-suave); font-size: .9rem; }
 
+/* tamanhos clicáveis na página do produto */
+.tamanho-chip { position: relative; min-width: 44px; min-height: 36px; padding: 2px 10px; border-radius: 6px; border: 1px solid var(--cor-linha); background: var(--cor-fundo-suave); font: inherit; font-size: .85rem; font-weight: 700; color: var(--cor-texto); cursor: pointer; transition: background var(--tempo-rapido), border-color var(--tempo-rapido), color var(--tempo-rapido), transform var(--tempo-rapido) var(--curva); }
+.etiquetas .tamanho-chip span { padding: 0; border: 0; background: none; border-radius: 0; font-size: inherit; }
+.tamanho-chip:hover { border-color: var(--everest-azul); }
+.tamanho-chip:active { transform: scale(.94); }
+.tamanho-chip--ativo { background: #dfe6f7; border-color: var(--everest-azul); color: var(--everest-azul); box-shadow: inset 0 0 0 1px var(--everest-azul); }
+.tamanho-chip__conta { margin-left: 1px; font-size: .7rem; color: var(--everest-azul); vertical-align: super; line-height: 0; }
+.tabela-grade__dica { color: var(--cor-texto-suave); font-size: .85rem; }
+.rascunho-aviso { margin: var(--esp-3) 0 0; font-size: .85rem; color: var(--cor-texto-suave); }
+.rascunho-aviso .botao--texto { min-height: 32px; padding: 0 var(--esp-2); font-size: .85rem; }
+
 /* ---------- Grade de pessoas (produto e compra coletiva) ---------- */
 .pessoas { display: grid; gap: var(--esp-3); }
 .pessoa { display: grid; grid-template-columns: 2.4rem repeat(var(--colunas, 6), minmax(0, 1fr)) auto; gap: var(--esp-2); align-items: end; padding: var(--esp-3); background: #fff; border: 1px solid var(--cor-linha); border-radius: var(--raio); animation: linha-entra var(--tempo) var(--curva); }
@@ -393,5 +424,6 @@ pre.json { max-height: 320px; overflow: auto; padding: var(--esp-3); background:
 @media (prefers-reduced-motion: reduce) {
   .cartao { transform: none !important; }
   .vitrine.revelar .cartao { opacity: 1; transform: none; }
-  .hero::before, .hero__imagem { animation: none; }
+  .hero::before, .hero__imagem, .hero--anima .hero__selo, .hero--anima h1, .hero--anima .hero__texto, .hero--anima .hero__acoes { animation: none !important; }
+  .hero__slide { transition: none; }
 }

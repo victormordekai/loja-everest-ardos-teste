@@ -27,6 +27,18 @@
     $('[data-totais]').textContent = `${nEq} ${nEq === 1 ? 'equipe' : 'equipes'} · ${atletas} ${atletas === 1 ? 'atleta' : 'atletas'} · ` +
       (semPreco ? 'preço a definir' : LOJA.divisao.formatarBRL(total));
     revisao.hidden = true; pedidoConferido = null; erros.textContent = '';
+    salvarRascunho();
+  }
+
+  // Rascunho: equipes, peça e linhas como estão nos campos
+  let restaurando = false;
+  function salvarRascunho() {
+    if (restaurando) return;
+    LOJA.rascunho.salvar('coletiva', $$('.equipe', caixa).map(eq => ({
+      nome: eq.querySelector('[name="nomeEquipe"]').value,
+      slug: eq.querySelector('[name="produto"]').value,
+      atletas: $$('.pessoa', eq).map(LOJA.pessoas.lerBruto)
+    })));
   }
 
   function adicionarAtleta(equipe, dados, focar) {
@@ -48,7 +60,7 @@
     dados.forEach(d => adicionarAtleta(equipe, Object.assign({}, d, { tamCalcao: d.tamCalcao === undefined ? undefined : d.tamCalcao || '' }), false));
   }
 
-  function novaEquipe(focar) {
+  function novaEquipe(focar, salvo) {
     contadorEquipes++;
     const idNome = 'equipe-nome-' + contadorEquipes, idProduto = 'equipe-produto-' + contadorEquipes;
     const seletor = el('select', { id: idProduto, name: 'produto' }, LOJA.produtos.filter(LOJA.podeVender).map(p => el('option', { value: p.slug, text: p.nome + (p.situacao === 'em-desenvolvimento' ? ' (em desenvolvimento)' : '') })));
@@ -71,7 +83,13 @@
       if ($$('.equipe', caixa).length > 1) { equipe.remove(); atualizar(); $('[data-nova-equipe]').focus(); }
       else { erros.textContent = 'O pedido precisa de pelo menos uma equipe.'; }
     });
-    adicionarAtleta(equipe, {}, false);
+    if (salvo) {
+      equipe.querySelector('[name="nomeEquipe"]').value = salvo.nome || '';
+      if (LOJA.produtoPorSlug(salvo.slug) && LOJA.podeVender(LOJA.produtoPorSlug(salvo.slug))) seletor.value = salvo.slug;
+      (salvo.atletas && salvo.atletas.length ? salvo.atletas : [{}]).forEach(a => adicionarAtleta(equipe, a, false));
+    } else {
+      adicionarAtleta(equipe, {}, false);
+    }
     if (focar) equipe.querySelector('[name="nomeEquipe"]').focus();
   }
 
@@ -122,8 +140,16 @@
   $('[data-confirmar]').addEventListener('click', () => {
     if (!pedidoConferido) return;
     LOJA.carrinho.adicionar({ tipo: 'coletivo', equipes: pedidoConferido.map(eq => ({ nome: eq.nome, slug: eq.slug, atletas: eq.atletas })) });
+    LOJA.rascunho.apagar('coletiva');
     location.href = 'carrinho.html';
   });
 
-  novaEquipe(false);
+  // Volta o rascunho (dentro do prazo) ou começa com uma equipe
+  const salvas = LOJA.rascunho.ler('coletiva');
+  if (Array.isArray(salvas) && salvas.length) {
+    restaurando = true; salvas.forEach(s => novaEquipe(false, s)); restaurando = false; atualizar();
+  } else {
+    novaEquipe(false);
+  }
+  $('[data-nova-equipe]').closest('p').after(LOJA.rascunho.aviso());
 })();

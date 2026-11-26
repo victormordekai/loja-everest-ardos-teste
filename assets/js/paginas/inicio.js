@@ -7,6 +7,77 @@
   const LOJA = window.LOJA;
   const { el, $, $$ } = LOJA;
   const vitrine = $('[data-vitrine]'); if (!vitrine) return;
+  const semMovimentoHero = LOJA.reduzirMovimento();
+
+  // ---------- HERO ----------
+  // A animação do hero roda: ao carregar (depois da abertura), ao clicar na imagem e ao voltar ao topo rolando.
+  const hero = $('.hero');
+  function animarHero() {
+    if (!hero || semMovimentoHero) return;
+    hero.classList.remove('hero--anima'); void hero.offsetWidth; hero.classList.add('hero--anima');
+    const onda = $('.onda--hero');
+    if (onda && onda.classList.contains('onda--espera')) {
+      onda.classList.remove('onda--desenha'); void onda.getBoundingClientRect();
+      requestAnimationFrame(() => requestAnimationFrame(() => onda.classList.add('onda--desenha')));
+    }
+  }
+  if (hero) {
+    window.setTimeout(animarHero, document.documentElement.classList.contains('com-abertura') ? 1400 : 0);
+    // Volta ao hero rolando de baixo para cima: anima de novo
+    if ('IntersectionObserver' in window) {
+      let saiu = false;
+      new IntersectionObserver(([e]) => {
+        if (e.intersectionRatio < 0.15) saiu = true;
+        else if (e.intersectionRatio >= 0.6 && saiu) { saiu = false; animarHero(); }
+      }, { threshold: [0, 0.15, 0.6] }).observe(hero);
+    }
+    // Clique na imagem: anima e leva aos produtos
+    const linkHero = $('[data-hero-link]');
+    linkHero.addEventListener('click', ev => {
+      ev.preventDefault();
+      animarHero();
+      window.setTimeout(() => {
+        const titulo = $('#produtos-titulo');
+        $('#produtos').scrollIntoView({ behavior: semMovimentoHero ? 'auto' : 'smooth' });
+        history.replaceState(null, '', '#produtos');
+        titulo.focus({ preventScroll: true });
+      }, semMovimentoHero ? 0 : 700);
+    });
+    // Imagens do hero: produtos com lancamento=true; mais de um vira carrossel
+    const lancamentos = LOJA.produtos.filter(p => p.lancamento);
+    const caixaSlides = $('[data-hero-slides]');
+    const legenda = $('[data-hero-legenda]');
+    const pontos = $('[data-hero-pontos]');
+    const textoLegenda = p => `${p.nome} · lançamento na escola. Imagem ilustrativa: a produção segue a arte aprovada.`;
+    if (lancamentos.length) {
+      caixaSlides.textContent = '';
+      const slides = lancamentos.map((p, i) => el('img', { class: 'hero__slide' + (i === 0 ? ' ativo' : ''), src: LOJA.imagemProduto(p), alt: '', width: '1200', height: '800', decoding: 'async' }));
+      slides.forEach(s => caixaSlides.append(s));
+      legenda.textContent = textoLegenda(lancamentos[0]);
+      if (lancamentos.length > 1) {
+        let atual = 0, timer = null;
+        const botoes = lancamentos.map((p, i) => {
+          const b = el('button', { type: 'button', class: 'hero__ponto', 'aria-label': `Mostrar ${p.nome}`, 'aria-pressed': String(i === 0) });
+          b.addEventListener('click', () => { mostrar(i); reiniciar(); });
+          pontos.append(b); return b;
+        });
+        function mostrar(i) {
+          atual = (i + slides.length) % slides.length;
+          slides.forEach((s, j) => s.classList.toggle('ativo', j === atual));
+          botoes.forEach((b, j) => b.setAttribute('aria-pressed', String(j === atual)));
+          legenda.textContent = textoLegenda(lancamentos[atual]);
+        }
+        function reiniciar() { if (timer) clearInterval(timer); if (!semMovimentoHero) timer = setInterval(() => mostrar(atual + 1), LOJA.config.heroIntervaloMs); }
+        const vitrineHero = $('[data-hero-vitrine]');
+        vitrineHero.addEventListener('mouseenter', () => clearInterval(timer));
+        vitrineHero.addEventListener('mouseleave', reiniciar);
+        vitrineHero.addEventListener('focusin', () => clearInterval(timer));
+        vitrineHero.addEventListener('focusout', reiniciar);
+        reiniciar();
+      }
+    }
+  }
+  // ---------- VITRINE ----------
   const caixaFiltros = $('[data-filtros]');
   const contagem = $('[data-contagem]');
   const semMovimento = LOJA.reduzirMovimento();
@@ -29,7 +100,7 @@
   function cartaoProduto(produto) {
     const seloTexto = produto.selo || (produto.imagem.tipo === 'mockup' ? 'Imagem ilustrativa' : null);
     const classeSituacao = produto.situacao === 'em-desenvolvimento' ? ' cartao--em-breve' : produto.situacao === 'indisponivel' ? ' cartao--em-breve cartao--indisponivel' : '';
-    return el('article', { class: 'cartao' + classeSituacao, dataset: { categoria: produto.categoria, chave: produto.slug } },
+    return el('article', { class: 'cartao' + classeSituacao + (produto.lancamento ? ' card_lancamento' : ''), dataset: { categoria: produto.categoria, chave: produto.slug } },
       el('div', { class: 'cartao__midia' + (produto.imagem.fundo === 'claro' ? ' cartao__midia--clara' : '') },
         seloTexto ? el('span', { class: 'selo' + (produto.selo ? ' selo--oficial' : ''), text: seloTexto }) : null,
         el('img', { src: LOJA.imagemProduto(produto), alt: produto.imagem.alt, loading: 'lazy', decoding: 'async', width: '800', height: '600' }),

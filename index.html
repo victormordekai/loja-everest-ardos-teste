@@ -37,6 +37,7 @@
 <script src="assets/js/nucleo/util.js" defer></script>
 <script src="assets/js/nucleo/divisao.js" defer></script>
 <script src="assets/js/nucleo/carrinho.js" defer></script>
+<script src="assets/js/nucleo/rascunho.js" defer></script>
 <script src="assets/js/comum.js" defer></script>
 <script src="assets/js/abertura.js"></script>
 <script src="assets/js/paginas/inicio.js" defer></script>
@@ -93,9 +94,17 @@
           <a class="botao botao--contorno-claro" href="pages/coletiva.html">Comprar para o time</a>
         </div>
       </div>
-      <figure class="hero__imagem">
-        <img src="assets/img/produtos/kit-oficial-everest.webp" width="1200" height="800" alt="Kit oficial Colégio Everest × ARDOS: camisa azul-marinho com pinceladas bordô e brancas, frente e costas com nome e número 6, e calção azul-marinho.">
-        <figcaption class="hero__legenda">Kit oficial, já lançado na escola. Imagem ilustrativa: a produção segue a arte aprovada.</figcaption>
+      <figure class="hero__imagem" data-hero-vitrine>
+        <a class="hero__link" href="#produtos" data-hero-link aria-label="Ver os produtos">
+          <span class="hero__slides" data-hero-slides>
+            <img class="hero__slide ativo" src="assets/img/produtos/kit-oficial-everest.webp" width="1200" height="800" alt="">
+          </span>
+          <span class="hero__chamada" aria-hidden="true">Ver produtos ↓</span>
+        </a>
+        <figcaption class="hero__legenda">
+          <span data-hero-legenda>Kit Oficial Colégio Everest × ARDOS · lançamento na escola. Imagem ilustrativa: a produção segue a arte aprovada.</span>
+          <span class="hero__pontos" data-hero-pontos></span>
+        </figcaption>
       </figure>
     </div>
     <svg class="onda onda--hero" data-onda viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
@@ -123,7 +132,7 @@
       <div class="secao__topo">
         <div>
           <span class="rotulo">Produtos</span>
-          <h2 id="produtos-titulo">Escolha o seu uniforme.</h2>
+          <h2 id="produtos-titulo" tabindex="-1">Escolha o seu uniforme.</h2>
           <p class="catalogo__contagem" data-contagem aria-live="polite"></p>
         </div>
         <div class="filtros" role="group" aria-label="Filtrar por categoria" data-filtros></div>
@@ -220,7 +229,7 @@
   </div>
   <div class="casca rodape__base">
     <span>© 2026 ARDOS. Marca Colégio Everest usada em parceria com a escola.</span>
-    <span>Loja Everest × ARDOS · versão v0.4.1 · teste · 26/11/2026</span>
+    <span>Loja Everest × ARDOS · versão v0.5.0 · teste · 26/11/2026</span>
   </div>
 </footer>
 </body>

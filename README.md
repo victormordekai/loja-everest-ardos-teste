@@ -1,4 +1,4 @@
-# Loja oficial Colégio Everest × ARDOS · v0.4.1 (teste)
+# Loja oficial Colégio Everest × ARDOS · v0.5.0 (teste)
 
 Loja de uniformes esportivos personalizados do Colégio Everest, produzidos e vendidos pela ARDOS.
 **Versão de teste:** nada é enviado nem cobrado. Todos os produtos usam o valor de teste R$ 100,00; preços reais, tabela de medidas e data de retirada ainda não estão definidos.
@@ -32,6 +32,8 @@ python3 -m http.server 8000
 | Quero mudar | Arquivo |
 |---|---|
 | Produto, preço, foto, campos de personalização | `assets/js/dados/produtos.js` (instruções no topo) |
+| Imagem do hero (lançamentos) | `lancamento: true` no produto em `produtos.js` (o cartão ganha a classe `card_lancamento`; mais de um = carrossel) |
+| Prazo do rascunho (carrinho e preenchimentos) | `rascunhoHoras` em `assets/js/config.js` (hoje 72 horas) |
 | Foto de um produto | `assets/img/produtos/<slug>.webp` (mesmo nome); mais fotos em `fotos: [{ src, alt }]` no `produtos.js` |
 | Tabelas de medidas | `assets/js/dados/medidas.js` |
 | Tamanhos, posições, contatos, unidades, regras de divisão | `assets/js/config.js` |
@@ -59,7 +61,7 @@ python3 tests/teste_navegador.py http://127.0.0.1:8000/ capturas/   # fluxos no 
 
 ## Segurança e dados
 - Site estático: tudo aqui é público. Nenhuma chave, senha ou endereço interno.
-- O carrinho fica só no navegador de quem compra, por até 24 horas.
+- O carrinho e os preenchimentos ficam só no navegador de quem compra, por até 72 horas (renovadas a cada alteração), com botão "Apagar dados salvos". A concordância com o uso dos dados não é guardada.
 - Nenhum dado real de aluno ou pedido entra neste repositório.
 
 ## Direitos

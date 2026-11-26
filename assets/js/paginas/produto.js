@@ -66,9 +66,22 @@
   if (produto.situacao === 'em-desenvolvimento') { situacao.hidden = false; situacao.textContent = `${M.emDesenvolvimento}. ${M.emDesenvolvimentoDetalhe}` + (LOJA.podeVender(produto) ? ' Nesta versão de teste, você já pode montar o pedido.' : ''); }
   if (produto.situacao === 'indisponivel') { situacao.hidden = false; situacao.textContent = M.indisponivel + '.'; }
   if (!LOJA.podeVender(produto)) { $('[data-montar]').hidden = true; }
-  LOJA.config.tamanhos.infantil.forEach(t => $('[data-tam-infantil]').append(el('span', { text: t })));
-  LOJA.config.tamanhos.adulto.forEach(t => $('[data-tam-adulto]').append(el('span', { text: t })));
-  LOJA.config.tamanhos.feminino.forEach(t => $('[data-tam-feminino]').append(el('span', { text: t + ' FEM' })));
+  // Tamanhos clicáveis: cada clique coloca o tamanho na grade (1º clique preenche a 1ª linha vazia;
+  // os seguintes criam linhas novas). O contador sobrescrito mostra quantas linhas têm aquele tamanho.
+  const vende = LOJA.podeVender(produto);
+  const faixas = [['infantil', t => t + ' INF', t => t], ['adulto', t => t, t => t], ['feminino', t => t + ' FEM', t => t + ' FEM']];
+  faixas.forEach(([faixa, valorDe, rotuloDe]) => {
+    const alvo = $(`[data-tam-${faixa}]`);
+    LOJA.config.tamanhos[faixa].forEach(t => {
+      const rotulo = rotuloDe(t);
+      if (!vende) { alvo.append(el('span', { text: rotulo })); return; }
+      const chip = el('button', { type: 'button', class: 'tamanho-chip', dataset: { valor: valorDe(t), rotulo }, 'aria-label': `Adicionar tamanho ${rotulo} à grade` },
+        el('span', { text: rotulo }), el('sup', { class: 'tamanho-chip__conta', 'aria-hidden': 'true' }));
+      chip.addEventListener('click', () => colocarTamanho(valorDe(t)));
+      alvo.append(chip);
+    });
+  });
+  if (vende) $('[data-dica-tamanhos]').hidden = false;
 
   // Painel (HUD) da tabela de medidas
   const hud = $('[data-hud-medidas]');
@@ -91,21 +104,46 @@
   const erros = $('[data-erros]');
   const sucesso = $('[data-sucesso]');
 
+  const CHAVE_RASCUNHO = 'produto:' + produto.slug;
+
+  /** Conta quantas linhas usam cada tamanho e pinta os botões de tamanho. */
+  function contarTamanhos() {
+    const contagem = {};
+    $$('.pessoa [name="tamanho"]', caixa).forEach(s => { if (s.value) contagem[s.value] = (contagem[s.value] || 0) + 1; });
+    $$('.tamanho-chip').forEach(chip => {
+      const n = contagem[chip.dataset.valor] || 0;
+      chip.classList.toggle('tamanho-chip--ativo', n > 0);
+      chip.setAttribute('aria-pressed', String(n > 0));
+      chip.querySelector('.tamanho-chip__conta').textContent = n > 1 ? String(n) : '';
+      chip.setAttribute('aria-label', `Adicionar tamanho ${chip.dataset.rotulo} à grade` + (n ? ` (${n} na grade)` : ''));
+    });
+  }
+
   function atualizar() {
     LOJA.pessoas.renumerar(caixa, 'Pessoa');
     const n = $$('.pessoa', caixa).length;
     const unitario = LOJA.carrinho.precoUnidade(produto, false);
     resumo.textContent = `${n} ${n === 1 ? 'peça' : 'peças'}` + (unitario === null ? ' · preço a definir' : ' · ' + LOJA.divisao.formatarBRL(unitario * n));
     erros.textContent = ''; sucesso.textContent = '';
+    contarTamanhos();
+    LOJA.rascunho.salvar(CHAVE_RASCUNHO, $$('.pessoa', caixa).map(LOJA.pessoas.lerBruto));
   }
 
   function adicionarPessoa(dados, focar) {
     const linha = LOJA.pessoas.criarLinha(produto, dados, atualizar, alvo => {
       if ($$('.pessoa', caixa).length > 1) { alvo.remove(); atualizar(); $('[data-adicionar]').focus(); }
-      else { alvo.querySelectorAll('input').forEach(i => { i.value = ''; }); atualizar(); }
+      else { alvo.querySelectorAll('input').forEach(i => { i.value = ''; }); alvo.querySelector('[name="tamanho"]').value = ''; atualizar(); }
     });
     caixa.append(linha); atualizar();
     if (focar) linha.querySelector('select, input').focus();
+    return linha;
+  }
+
+  /** Clique num tamanho: usa a primeira linha ainda sem tamanho; se não houver, cria outra linha. */
+  function colocarTamanho(valor) {
+    const vazia = $$('.pessoa [name="tamanho"]', caixa).find(s => !s.value);
+    if (vazia) { vazia.value = valor; vazia.removeAttribute('aria-invalid'); atualizar(); return; }
+    adicionarPessoa({ tamanho: valor }, false);
   }
 
   $('[data-adicionar]').addEventListener('click', () => adicionarPessoa({}, true));
@@ -121,11 +159,16 @@
     }
     LOJA.carrinho.adicionar({ tipo: 'individual', slug: produto.slug, unidades: lista });
     caixa.textContent = ''; adicionarPessoa({}, false);
+    LOJA.rascunho.apagar(CHAVE_RASCUNHO);
     sucesso.textContent = '';
     sucesso.append(`${lista.length} ${lista.length === 1 ? 'peça adicionada' : 'peças adicionadas'} ao carrinho. `,
       el('a', { href: 'carrinho.html', text: 'Ir para o carrinho' }));
-    sucesso.focus && sucesso.setAttribute('tabindex', '-1'); sucesso.focus();
+    sucesso.setAttribute('tabindex', '-1'); sucesso.focus();
   });
 
-  adicionarPessoa({}, false);
+  // Volta o que a pessoa já tinha preenchido (rascunho dentro do prazo), ou começa com uma linha.
+  const salvo = LOJA.rascunho.ler(CHAVE_RASCUNHO);
+  if (Array.isArray(salvo) && salvo.length) salvo.forEach(d => adicionarPessoa(d, false));
+  else adicionarPessoa({}, false);
+  $('[data-montar]').append(LOJA.rascunho.aviso());
 })();

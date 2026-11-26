@@ -6,6 +6,8 @@
  * precoTeste=true: o preço é o valor de teste (R$ 100,00), não o preço real.
  * Para trocar a foto: substituir o arquivo em assets/img/produtos/ com o mesmo nome
  * (ou mudar "imagem.src") e trocar "imagem.tipo" para "foto".
+ * Lançamento: lancamento=true põe o produto no hero da página inicial e dá ao cartão a classe
+ *   card_lancamento. Com mais de um lançamento, o hero alterna as fotos em carrossel.
  * Mais fotos: preencher "fotos" com { src, alt } (arquivos em assets/img/produtos/).
  * A página mostra LOJA.config.fotosPorProduto espaços; os vazios aparecem como "Foto em breve".
  * Para definir o preço: preencher "precoCentavos" (ex.: 18800 = R$ 188,00).
@@ -39,6 +41,7 @@ window.LOJA.produtos = Object.freeze([
     imagem: { src: 'kit-oficial-everest.webp', tipo: 'arte', fundo: 'claro',
       alt: 'Kit oficial: camisa azul-marinho com pinceladas bordô e brancas, frente e costas com nome e número 6, e calção azul-marinho com número 6.' },
     selo: 'Lançado na escola',
+    lancamento: true,             // aparece no hero da página inicial (vários = carrossel)
     situacao: 'disponivel',
     fotos: [],
     precoCentavos: 10000,

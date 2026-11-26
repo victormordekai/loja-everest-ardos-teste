@@ -4,7 +4,7 @@
  */
 window.LOJA = window.LOJA || {};
 window.LOJA.config = Object.freeze({
-  versao: 'v0.4.1',
+  versao: 'v0.5.0',
   ambiente: 'TESTE',                 // TESTE: nada é enviado nem cobrado
   dataVersao: '26/11/2026',
 
@@ -34,7 +34,7 @@ window.LOJA.config = Object.freeze({
   ],
 
   // Rascunho do carrinho no navegador
-  rascunhoHoras: 24,
+  rascunhoHoras: 72,                 // carrinho e preenchimentos guardados no navegador por 3 dias (renovado a cada alteração)
 
   // Contatos ARDOS [ARQUIVO: rodapé do Portal Champions ARDOS, composer/footer.html]
   ardos: {
@@ -55,6 +55,7 @@ window.LOJA.config = Object.freeze({
     adulto: ['PP', 'P', 'M', 'G', 'GG', 'XG', 'G1', 'G2', 'G3', 'G4', 'G5'],
     feminino: ['PP', 'P', 'M', 'G', 'GG', 'XG', 'G1', 'G2', 'G3', 'G4', 'G5']
   },
+  heroIntervaloMs: 5000,            // troca de foto do hero quando há mais de um lançamento
   fotosPorProduto: 4,                // espaços de foto na página do produto (os vazios mostram "Foto em breve")
   // Posições [ARQUIVO: Grade Web do Portal Champions ARDOS], mais "não se aplica" para compra individual
   posicoes: ['NÃO SE APLICA', 'LINHA', 'GOLEIRO', 'ÁRBITRO', 'COMISSÃO TÉCNICA', 'OUTRO']

@@ -14,7 +14,14 @@
 
   LOJA.config.unidades.forEach(u => $('[data-unidades]').append(el('option', { value: u, text: u })));
   form.addEventListener('submit', ev => ev.preventDefault());
-  form.addEventListener('input', ev => ev.target.removeAttribute('aria-invalid'));
+  // Rascunho do formulário (sem a concordância, que é marcada a cada pedido)
+  const CAMPOS_SALVOS = ['aluno', 'turma', 'unidade', 'responsavel', 'email', 'telefone'];
+  const salvoForm = LOJA.rascunho.ler('retirada');
+  if (salvoForm) CAMPOS_SALVOS.forEach(n => { if (typeof salvoForm[n] === 'string') form.elements[n].value = salvoForm[n]; });
+  const salvarForm = () => LOJA.rascunho.salvar('retirada', Object.fromEntries(CAMPOS_SALVOS.map(n => [n, form.elements[n].value])));
+  form.addEventListener('input', ev => { ev.target.removeAttribute('aria-invalid'); salvarForm(); });
+  form.addEventListener('change', salvarForm);
+  form.after(LOJA.rascunho.aviso());
 
   // ---------- Itens ----------
   function fotoDe(produto) {
@@ -216,7 +223,7 @@
     document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   });
   $('[data-limpar]').addEventListener('click', () => {
-    LOJA.carrinho.limpar(); form.reset(); ultimoPedido = null; desenharTudo();
+    LOJA.carrinho.limpar(); LOJA.rascunho.apagar('retirada'); form.reset(); ultimoPedido = null; desenharTudo();
     const titulo = $('[data-vazio] h2'); titulo.setAttribute('tabindex', '-1'); titulo.focus();
   });
 
