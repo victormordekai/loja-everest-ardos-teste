@@ -18,6 +18,25 @@
     nav.addEventListener('click', ev => { if (ev.target.closest('a')) fechar(); });
   }
 
+  // Cabeçalho: some ao rolar para baixo e volta ao rolar para cima (fica visível com o menu aberto ou com foco dentro)
+  const topo = LOJA.$('.topo');
+  if (topo) {
+    let ultimoY = window.scrollY, pedido = false;
+    const MARGEM = 8;               // movimento mínimo (px) para mudar de estado
+    const INICIO = 140;             // perto do topo, o cabeçalho fica sempre visível
+    function aoRolar() {
+      pedido = false;
+      const y = window.scrollY;
+      const travado = (nav && nav.classList.contains('aberto')) || topo.contains(document.activeElement);
+      if (y < INICIO || travado) topo.classList.remove('topo--escondido');
+      else if (y > ultimoY + MARGEM) topo.classList.add('topo--escondido');
+      else if (y < ultimoY - MARGEM) topo.classList.remove('topo--escondido');
+      if (Math.abs(y - ultimoY) > MARGEM) ultimoY = y;
+    }
+    window.addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(aoRolar); } }, { passive: true });
+    topo.addEventListener('focusin', () => topo.classList.remove('topo--escondido'));
+  }
+
   function atualizarContador() {
     const n = LOJA.carrinho.quantidade();
     LOJA.$$('[data-contador]').forEach(c => { c.textContent = String(n); });

@@ -15,6 +15,8 @@
 .faixa-escola__lema { font-family: var(--fonte-titulo); font-style: italic; color: #fff; margin-right: var(--esp-2); padding-right: var(--esp-2); border-right: 1px solid rgba(255,255,255,.3); }
 .faixa-escola a { color: #fff; font-weight: 600; white-space: nowrap; text-decoration: none; }
 .faixa-escola a:hover { color: #ffd9da; text-decoration: underline; }
+.topo { transition: transform var(--tempo) var(--curva), box-shadow var(--tempo); }
+.topo--escondido { transform: translateY(-100%); }
 .topo { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.94); backdrop-filter: saturate(1.4) blur(8px); border-bottom: 1px solid var(--cor-linha); }
 .topo__barra { display: flex; align-items: center; gap: var(--esp-4); min-height: 72px; }
 .topo__marcas { display: flex; align-items: center; gap: var(--esp-3); text-decoration: none; margin-right: auto; }
@@ -68,6 +70,13 @@
 .hero--anima .hero__texto { animation-delay: .18s; }
 .hero--anima .hero__acoes { animation-delay: .28s; }
 @keyframes texto-sobe { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+/* pulso: sem aparecer/sumir — a faixa desliza e volta, imagem e texto fazem um zoom suave */
+.hero.hero--pulso::before { animation: faixa-pulso 1.3s var(--curva); }
+.hero--pulso .hero__imagem { animation: imagem-pulso 1.3s var(--curva); }
+.hero--pulso .hero__grade > div:first-child { transform-origin: left center; animation: texto-pulso 1.3s var(--curva); }
+@keyframes faixa-pulso { 0% { transform: none; } 45% { transform: translateX(7%); } 100% { transform: none; } }
+@keyframes imagem-pulso { 0% { transform: rotate(-1.5deg) scale(1); } 45% { transform: rotate(-1.5deg) scale(1.03); } 100% { transform: rotate(-1.5deg) scale(1); } }
+@keyframes texto-pulso { 0% { transform: scale(1); } 45% { transform: scale(1.015); } 100% { transform: scale(1); } }
 .hero__link { display: block; position: relative; color: inherit; text-decoration: none; cursor: pointer; }
 .hero__slides { display: grid; overflow: hidden; }
 .hero__slide { grid-area: 1 / 1; width: 100%; height: auto; opacity: 0; transform: scale(1.06) translateX(14px); transition: opacity .8s var(--curva), transform 1.4s var(--curva); }
@@ -311,6 +320,10 @@ html.com-abertura .abertura { display: block; position: fixed; inset: 0; z-index
 .tamanho-chip--ativo { background: #dfe6f7; border-color: var(--everest-azul); color: var(--everest-azul); box-shadow: inset 0 0 0 1px var(--everest-azul); }
 .tamanho-chip__conta { margin-left: 1px; font-size: .7rem; color: var(--everest-azul); vertical-align: super; line-height: 0; }
 .tabela-grade__dica { color: var(--cor-texto-suave); font-size: .85rem; }
+.tamanho-dica { position: fixed; z-index: 120; max-width: 280px; padding: var(--esp-3) var(--esp-4); border: 0; border-radius: 12px; background: #fff; color: var(--everest-azul); font-size: .9rem; font-weight: 600; line-height: 1.4; box-shadow: 0 12px 32px rgba(16,23,45,.18); pointer-events: none;
+  opacity: 0; transform: translateY(6px) scale(.98); transition: opacity var(--tempo) var(--curva), transform var(--tempo) var(--curva); }
+.tamanho-dica.visivel { opacity: 1; transform: none; }
+.tamanho-dica::after { content: ""; position: absolute; left: var(--seta-x, 24px); bottom: -6px; width: 12px; height: 12px; background: #fff; transform: translateX(-50%) rotate(45deg); }
 .rascunho-aviso { margin: var(--esp-3) 0 0; font-size: .85rem; color: var(--cor-texto-suave); }
 .rascunho-aviso .botao--texto { min-height: 32px; padding: 0 var(--esp-2); font-size: .85rem; }
 
@@ -424,6 +437,6 @@ pre.json { max-height: 320px; overflow: auto; padding: var(--esp-3); background:
 @media (prefers-reduced-motion: reduce) {
   .cartao { transform: none !important; }
   .vitrine.revelar .cartao { opacity: 1; transform: none; }
-  .hero::before, .hero__imagem, .hero--anima .hero__selo, .hero--anima h1, .hero--anima .hero__texto, .hero--anima .hero__acoes { animation: none !important; }
+  .hero::before, .hero__imagem, .hero--pulso .hero__grade > div:first-child, .hero--anima .hero__selo, .hero--anima h1, .hero--anima .hero__texto, .hero--anima .hero__acoes { animation: none !important; }
   .hero__slide { transition: none; }
 }

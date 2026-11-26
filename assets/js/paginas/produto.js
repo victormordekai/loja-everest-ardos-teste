@@ -81,7 +81,31 @@
       alvo.append(chip);
     });
   });
-  if (vende) $('[data-dica-tamanhos]').hidden = false;
+  if (vende) {
+    $('[data-dica-tamanhos]').hidden = false;
+    // Dica flutuante: abre suave ao passar o mouse (ou focar pelo teclado) num tamanho
+    const dica = el('div', { class: 'tamanho-dica', id: 'dica-tamanhos', role: 'tooltip',
+      text: 'Clique no tamanho para incluir uma peça na grade. Depois, desça até "Monte seu pedido" para completar nome e número.' });
+    document.body.append(dica);
+    const mostrarDica = chip => {
+      const r = chip.getBoundingClientRect();
+      dica.style.left = '0px'; dica.style.top = '0px'; dica.classList.add('visivel');
+      const largura = dica.offsetWidth, altura = dica.offsetHeight;
+      const x = Math.min(Math.max(8, r.left + r.width / 2 - 24), window.innerWidth - largura - 8);
+      dica.style.left = x + 'px'; dica.style.top = (r.top - altura - 12) + 'px';
+      dica.style.setProperty('--seta-x', Math.max(14, Math.min(largura - 14, r.left + r.width / 2 - x)) + 'px');
+    };
+    const esconderDica = () => dica.classList.remove('visivel');
+    $$('.tamanho-chip').forEach(chip => {
+      chip.setAttribute('aria-describedby', 'dica-tamanhos');
+      chip.addEventListener('mouseenter', () => mostrarDica(chip));
+      chip.addEventListener('mouseleave', esconderDica);
+      chip.addEventListener('focus', () => mostrarDica(chip));
+      chip.addEventListener('blur', esconderDica);
+    });
+    window.addEventListener('scroll', esconderDica, { passive: true });
+    document.addEventListener('keydown', ev => { if (ev.key === 'Escape') esconderDica(); });
+  }
 
   // Painel (HUD) da tabela de medidas
   const hud = $('[data-hud-medidas]');

@@ -10,11 +10,15 @@
   const semMovimentoHero = LOJA.reduzirMovimento();
 
   // ---------- HERO ----------
-  // A animação do hero roda: ao carregar (depois da abertura), ao clicar na imagem e ao voltar ao topo rolando.
+  // Duas animações do hero:
+  //   'entrada' — completa, só quando a página carrega (faz parte do impacto da abertura);
+  //   'pulso'   — leve, ao clicar na imagem e ao voltar ao topo: só a faixa geométrica se move,
+  //               a onda se redesenha e imagem e texto fazem um zoom suave, sem aparecer/sumir.
   const hero = $('.hero');
-  function animarHero() {
+  function animarHero(modo) {
     if (!hero || semMovimentoHero) return;
-    hero.classList.remove('hero--anima'); void hero.offsetWidth; hero.classList.add('hero--anima');
+    hero.classList.remove('hero--anima', 'hero--pulso'); void hero.offsetWidth;
+    hero.classList.add(modo === 'entrada' ? 'hero--anima' : 'hero--pulso');
     const onda = $('.onda--hero');
     if (onda && onda.classList.contains('onda--espera')) {
       onda.classList.remove('onda--desenha'); void onda.getBoundingClientRect();
@@ -22,20 +26,20 @@
     }
   }
   if (hero) {
-    window.setTimeout(animarHero, document.documentElement.classList.contains('com-abertura') ? 1400 : 0);
+    window.setTimeout(() => animarHero('entrada'), document.documentElement.classList.contains('com-abertura') ? 1400 : 0);
     // Volta ao hero rolando de baixo para cima: anima de novo
     if ('IntersectionObserver' in window) {
       let saiu = false;
       new IntersectionObserver(([e]) => {
         if (e.intersectionRatio < 0.15) saiu = true;
-        else if (e.intersectionRatio >= 0.6 && saiu) { saiu = false; animarHero(); }
+        else if (e.intersectionRatio >= 0.6 && saiu) { saiu = false; animarHero('pulso'); }
       }, { threshold: [0, 0.15, 0.6] }).observe(hero);
     }
     // Clique na imagem: anima e leva aos produtos
     const linkHero = $('[data-hero-link]');
     linkHero.addEventListener('click', ev => {
       ev.preventDefault();
-      animarHero();
+      animarHero('pulso');
       window.setTimeout(() => {
         const titulo = $('#produtos-titulo');
         $('#produtos').scrollIntoView({ behavior: semMovimentoHero ? 'auto' : 'smooth' });
