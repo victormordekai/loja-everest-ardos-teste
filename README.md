@@ -1,4 +1,4 @@
-# Loja oficial Colégio Everest × ARDOS · v0.2.0 (teste)
+# Loja oficial Colégio Everest × ARDOS · v0.3.0 (teste)
 
 Loja de uniformes esportivos personalizados do Colégio Everest, produzidos e vendidos pela ARDOS.
 **Versão de teste:** nada é enviado nem cobrado. Todos os produtos usam o valor de teste R$ 100,00; preços reais, tabela de medidas e data de retirada ainda não estão definidos.
@@ -20,6 +20,7 @@ Para lançar um produto: troque a foto, preencha `precoCentavos`, apague `precoT
 | `pages/coletiva.html` | Compra do time: várias equipes, uma linha por atleta (padrão da Grade Web do Portal Champions) |
 | `pages/carrinho.html` | Revisão, quem retira na escola e divisão do pagamento em até 3 links por cobrança |
 | `pages/privacidade.html` | Dados pessoais (texto de trabalho) |
+| `pages/tabela_de_medidas.html` | Tabelas de medidas Infantil, Adulto e Feminino (a mesma do painel da página do produto) |
 
 ## Como rodar
 Abra `index.html` no navegador, ou sirva a pasta:
@@ -31,7 +32,8 @@ python3 -m http.server 8000
 | Quero mudar | Arquivo |
 |---|---|
 | Produto, preço, foto, campos de personalização | `assets/js/dados/produtos.js` (instruções no topo) |
-| Foto de um produto | `assets/img/produtos/<slug>.webp` (mesmo nome) |
+| Foto de um produto | `assets/img/produtos/<slug>.webp` (mesmo nome); mais fotos em `fotos: [{ src, alt }]` no `produtos.js` |
+| Tabelas de medidas | `assets/js/dados/medidas.js` |
 | Tamanhos, posições, contatos, unidades, regras de divisão | `assets/js/config.js` |
 | Cores e fontes | `assets/css/tokens.css` (cada valor diz a origem) |
 | Cabeçalho, rodapé, versão | `tools/parciais/` e depois `python3 tools/montar_paginas.py` |
@@ -56,6 +58,7 @@ python3 tests/teste_navegador.py http://127.0.0.1:8000/ capturas/   # fluxos no 
 - Nenhum dado real de aluno ou pedido entra neste repositório.
 
 ## Direitos
-Código © 2026 ARDOS, todos os direitos reservados. As marcas Colégio Everest e ARDOS pertencem aos seus titulares e não estão licenciadas para reuso.
+As marcas Colégio Everest e ARDOS, os logos, as imagens de produtos e as tabelas de medidas pertencem aos seus titulares.
+**Pendente de decisão:** o repositório foi criado com o arquivo `LICENSE` (MIT). Enquanto a ARDOS não decidir se mantém essa licença ou a troca, não trate marcas, logos e imagens deste repositório como licenciados para reuso.
 
 Vestimos Identidades. Entregamos Confiança.

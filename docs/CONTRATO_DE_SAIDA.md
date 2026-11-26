@@ -62,7 +62,8 @@ Tom: claro, não técnico; acolhedor, não infantil; institucional, não burocr�
 | # | Pendência | Responsável | Prazo |
 |---|---|---|---|
 | 1 | Preço de cada produto (hoje: valor de teste R$ 100,00, decisão de Victor em 26/11/2026) | Comercial / Diretoria | a definir |
-| 2 | Tamanhos disponíveis por peça e tabela de medidas | Design / Produção | a definir |
+| 2 | Tamanhos disponíveis por peça; tabela de medidas feminina (as tabelas infantil e adulto foram recebidas em 26/11/2026) | Design / Produção | a definir |
+| 2b | Conferir na tabela da camisa adulto a largura (B) de G4 = 83 cm e G5 = 89 cm (salto maior que nos outros tamanhos) e os valores de elástico esticado do calção infantil | Design | a definir |
 | 3 | Campos de personalização por peça (exceto kit oficial) | Design | a definir |
 | 4 | Variantes de cor | Design | a definir |
 | 5 | Data, horário e forma da retirada na escola | Comercial + escola | a definir |

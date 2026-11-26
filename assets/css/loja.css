@@ -159,7 +159,8 @@
 .rodape h2 { color: #fff; font-family: var(--fonte-texto); font-size: .85rem; letter-spacing: .14em; text-transform: uppercase; margin-bottom: var(--esp-3); }
 .rodape ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--esp-2); }
 .rodape address { font-style: normal; }
-.rodape__assinatura { font-family: var(--fonte-titulo); font-size: 1.05rem; color: #fff; }
+.rodape__assinatura { margin-top: var(--esp-4); font-family: var(--fonte-titulo); font-size: 1rem; color: #fff; }
+.rodape__assinatura span { display: block; font-family: var(--fonte-texto); font-size: .75rem; letter-spacing: .14em; color: #c6cde4; }
 .rodape__base { border-top: 1px solid rgba(255,255,255,.18); padding: var(--esp-4) 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--esp-3); font-size: .85rem; color: #c6cde4; }
 
 /* ---------- Página de produto ---------- */
@@ -182,6 +183,65 @@
 .tabela-grade th { width: 30%; color: var(--everest-azul); }
 .etiquetas { display: flex; flex-wrap: wrap; gap: 6px; }
 .etiquetas span { padding: 2px 8px; border-radius: 6px; background: var(--cor-fundo-suave); border: 1px solid var(--cor-linha); font-size: .85rem; font-weight: 600; }
+
+/* seções de largura total abaixo da foto */
+.produto__pedido { padding: var(--esp-6) 0; border-top: 1px solid var(--cor-linha); }
+.produto__pedido:last-child { padding-bottom: var(--esp-7); }
+
+/* galeria: miniaturas e zoom */
+.produto__foto { position: relative; cursor: zoom-in; touch-action: pan-y; }
+.produto__foto img { transition: transform var(--tempo) var(--curva); transform-origin: var(--zx, 50%) var(--zy, 50%); }
+.produto__foto.zoom img { transform: scale(2.2); transition: transform 80ms linear; }
+.produto__foto.zoom { cursor: zoom-out; }
+.produto__foto.zoom-toque { touch-action: none; }
+.miniaturas { list-style: none; margin: var(--esp-3) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--esp-2); }
+.miniatura { display: grid; place-items: center; width: 100%; aspect-ratio: 4 / 3; padding: 0; border: 2px solid transparent; border-radius: 8px; overflow: hidden; background: var(--cor-estudio); cursor: pointer; }
+.miniatura--clara { background: #ececec; }
+.miniatura img { width: 100%; height: 100%; object-fit: contain; }
+.miniatura[aria-current="true"] { border-color: var(--everest-azul); }
+.miniatura--vazia { border: 2px dashed var(--cor-linha); background: var(--cor-fundo-suave); color: var(--cor-texto-suave); font-size: .75rem; text-align: center; cursor: default; }
+.botao--pequeno { min-height: 44px; padding: var(--esp-2) var(--esp-4); font-size: .95rem; }
+
+/* HUD da tabela de medidas */
+.hud { width: min(100% - 1.5rem, 1040px); max-height: min(92vh, 900px); padding: 0; border: 0; border-radius: var(--raio-grande); box-shadow: 0 30px 80px rgba(0,0,0,.35); color: var(--cor-texto); }
+.hud::backdrop { background: rgba(16,23,45,.6); backdrop-filter: blur(2px); }
+.hud[open] { animation: hud-abre var(--tempo) var(--curva); }
+@keyframes hud-abre { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
+.hud__topo { position: sticky; top: 0; z-index: 1; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--esp-3); padding: var(--esp-4) var(--esp-5); background: var(--everest-azul); }
+.hud__topo h2 { margin: 0; color: #fff; font-size: 1.3rem; }
+.hud__acoes { display: flex; align-items: center; gap: var(--esp-2); }
+.hud__acoes .botao--texto { color: #fff; }
+.hud__fechar { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5); background: transparent; color: #fff; font-size: 1.5rem; cursor: pointer; }
+.hud__fechar:hover { background: rgba(255,255,255,.15); }
+.hud .medidas { padding: var(--esp-5); }
+
+/* tabelas de medidas (HUD e página) */
+.medidas__instrucao { color: var(--cor-texto-suave); }
+.medidas__faixas { display: flex; flex-wrap: wrap; gap: var(--esp-2); margin-bottom: var(--esp-4); }
+.medidas__faixas .filtro[aria-expanded="true"] { background: var(--everest-azul); border-color: var(--everest-azul); color: #fff; }
+.medidas__painel { display: grid; gap: var(--esp-5); animation: linha-entra var(--tempo) var(--curva); }
+.medidas__tabela { margin: 0; padding: var(--esp-4); border: 1px solid var(--cor-linha); border-radius: var(--raio); background: #fff; }
+.medidas__tabela figcaption { font-family: var(--fonte-titulo); font-size: 1.15rem; font-weight: 700; color: var(--everest-azul); margin-bottom: var(--esp-3); }
+.medidas__corpo { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: var(--esp-4); align-items: center; }
+.medidas__desenho { width: 100%; height: auto; }
+.medidas__desenho .peca { fill: var(--cor-fundo-suave); stroke: var(--everest-azul); stroke-width: 2; stroke-linejoin: round; }
+.medidas__desenho .cos { stroke: var(--everest-azul); stroke-width: 1.5; }
+.medidas__desenho .cota line { stroke: var(--everest-bordo); stroke-width: 2; }
+.medidas__desenho marker path { fill: var(--everest-bordo); }
+.medidas__desenho .cota text { fill: var(--everest-bordo); font: 700 14px var(--fonte-texto); text-anchor: middle; }
+.medidas__rolagem { overflow-x: auto; }
+.medidas__rolagem table { width: 100%; border-collapse: collapse; font-size: .9rem; font-variant-numeric: tabular-nums; }
+.medidas__rolagem th, .medidas__rolagem td { padding: var(--esp-2); border-bottom: 1px solid var(--cor-linha); text-align: center; white-space: nowrap; }
+.medidas__rolagem thead th { background: var(--everest-azul); color: #fff; }
+.medidas__rolagem thead th:first-child { text-align: left; }
+.medidas__rolagem tbody th { text-align: left; color: var(--everest-azul); }
+.medidas__rolagem th:first-child { position: sticky; left: 0; z-index: 1; background: #fff; box-shadow: 1px 0 0 var(--cor-linha); }
+.medidas__rolagem thead th:first-child { background: var(--everest-azul); }
+.medidas__dica { display: none; margin: var(--esp-2) 0 0; font-size: .8rem; color: var(--cor-texto-suave); }
+@media (max-width: 860px) { .medidas__dica { display: block; } }
+.medidas__rolagem td small { display: block; font-size: .72rem; color: var(--cor-texto-suave); }
+.medidas__letra { display: inline-grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 50%; background: var(--everest-bordo); color: #fff; font-size: .8rem; }
+.medidas__avisos { margin: var(--esp-4) 0 0; padding-left: 1.2rem; color: var(--cor-texto-suave); font-size: .9rem; }
 
 /* ---------- Grade de pessoas (produto e compra coletiva) ---------- */
 .pessoas { display: grid; gap: var(--esp-3); }
@@ -269,6 +329,8 @@ pre.json { max-height: 320px; overflow: auto; padding: var(--esp-3); background:
   .hero__grade, .chamada, .produto, .carrinho { grid-template-columns: 1fr; }
   .hero__grade { padding: var(--esp-7) 0; }
   .produto__galeria { position: static; }
+  .medidas__corpo { grid-template-columns: 1fr; }
+  .medidas__desenho { max-width: 200px; margin-inline: auto; }
   .equipe__topo { grid-template-columns: 1fr; }
   .chamada { padding: var(--esp-5); }
 }

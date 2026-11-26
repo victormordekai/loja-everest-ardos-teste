@@ -4,7 +4,7 @@
  */
 window.LOJA = window.LOJA || {};
 window.LOJA.config = Object.freeze({
-  versao: 'v0.2.0',
+  versao: 'v0.3.0',
   ambiente: 'TESTE',                 // TESTE: nada é enviado nem cobrado
   dataVersao: '26/11/2026',
 
@@ -48,10 +48,14 @@ window.LOJA.config = Object.freeze({
   everest: { site: 'https://www.colegioeverest.curitiba.br/pt-br/home' },
 
   // Grade de referência ARDOS [ARQUIVO: vocabulário de grade do Extrator Mestre V005.4]
+  // Ordem na tela: infantil, adulto, feminino (pedido de Victor, 26/11/2026).
+  // Feminino usa o modificador FEM do Extrator; grade feminina própria e tabela de medidas: PENDENTES.
   tamanhos: {
+    infantil: ['02', '04', '06', '08', '10', '12', '14', '16'],
     adulto: ['PP', 'P', 'M', 'G', 'GG', 'XG', 'G1', 'G2', 'G3', 'G4', 'G5'],
-    infantil: ['02', '04', '06', '08', '10', '12', '14', '16']
+    feminino: ['PP', 'P', 'M', 'G', 'GG', 'XG', 'G1', 'G2', 'G3', 'G4', 'G5']
   },
+  fotosPorProduto: 4,                // espaços de foto na página do produto (os vazios mostram "Foto em breve")
   // Posições [ARQUIVO: Grade Web do Portal Champions ARDOS], mais "não se aplica" para compra individual
   posicoes: ['NÃO SE APLICA', 'LINHA', 'GOLEIRO', 'ÁRBITRO', 'COMISSÃO TÉCNICA', 'OUTRO']
 });

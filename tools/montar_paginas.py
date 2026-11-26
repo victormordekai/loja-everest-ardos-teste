@@ -20,6 +20,7 @@ PAGINAS = {
     "coletiva.html": ("pages/coletiva.html", "../", "COLETIVA"),
     "carrinho.html": ("pages/carrinho.html", "../", "CARRINHO"),
     "privacidade.html": ("pages/privacidade.html", "../", None),
+    "tabela_de_medidas.html": ("pages/tabela_de_medidas.html", "../", None),
 }
 MARCAS_MENU = ("PRODUTOS", "COLETIVA", "CARRINHO")
 

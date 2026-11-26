@@ -6,6 +6,8 @@
  * precoTeste=true: o preço é o valor de teste (R$ 100,00), não o preço real.
  * Para trocar a foto: substituir o arquivo em assets/img/produtos/ com o mesmo nome
  * (ou mudar "imagem.src") e trocar "imagem.tipo" para "foto".
+ * Mais fotos: preencher "fotos" com { src, alt } (arquivos em assets/img/produtos/).
+ * A página mostra LOJA.config.fotosPorProduto espaços; os vazios aparecem como "Foto em breve".
  * Para definir o preço: preencher "precoCentavos" (ex.: 18800 = R$ 188,00).
  *
  * campos: o que o comprador informa por peça/pessoa
@@ -38,6 +40,7 @@ window.LOJA.produtos = Object.freeze([
       alt: 'Kit oficial: camisa azul-marinho com pinceladas bordô e brancas, frente e costas com nome e número 6, e calção azul-marinho com número 6.' },
     selo: 'Lançado na escola',
     situacao: 'disponivel',
+    fotos: [],
     precoCentavos: 10000,
     precoTeste: true,
     campos: ['tamanho', 'nome', 'numero', 'posicao', 'tamCalcao', 'variante'],
@@ -57,6 +60,7 @@ window.LOJA.produtos = Object.freeze([
     situacao: 'em-desenvolvimento',
     imagem: { src: 'kit-manga-longa.webp', tipo: 'mockup', fundo: 'estudio',
       alt: 'Mockup neutro do kit manga longa: camisa branca de manga longa e calção branco, frente e costas.' },
+    fotos: [],
     precoCentavos: 10000,
     precoTeste: true,
     campos: ['tamanho', 'nome', 'numero', 'posicao', 'tamCalcao', 'variante'],
@@ -75,6 +79,7 @@ window.LOJA.produtos = Object.freeze([
     situacao: 'em-desenvolvimento',
     imagem: { src: 'camisa-babylook.webp', tipo: 'mockup', fundo: 'estudio',
       alt: 'Mockup neutro da camisa babylook branca, frente e costas.' },
+    fotos: [],
     precoCentavos: 10000,
     precoTeste: true,
     campos: ['tamanho', 'nome', 'numero', 'variante'],
@@ -93,6 +98,7 @@ window.LOJA.produtos = Object.freeze([
     situacao: 'em-desenvolvimento',
     imagem: { src: 'camisa-regata.webp', tipo: 'mockup', fundo: 'estudio',
       alt: 'Mockup neutro da camisa regata cinza com recortes laterais, frente e costas.' },
+    fotos: [],
     precoCentavos: 10000,
     precoTeste: true,
     campos: ['tamanho', 'nome', 'numero', 'posicao', 'variante'],
@@ -111,6 +117,7 @@ window.LOJA.produtos = Object.freeze([
     situacao: 'em-desenvolvimento',
     imagem: { src: 'calcao.webp', tipo: 'mockup', fundo: 'estudio',
       alt: 'Mockup do calção preto com vivo amarelo nas laterais, frente e costas.' },
+    fotos: [],
     precoCentavos: 10000,
     precoTeste: true,
     campos: ['tamanho', 'numero', 'variante'],
@@ -129,6 +136,7 @@ window.LOJA.produtos = Object.freeze([
     situacao: 'em-desenvolvimento',
     imagem: { src: 'calca.webp', tipo: 'mockup', fundo: 'estudio',
       alt: 'Mockup neutro da calça branca com punho no tornozelo, frente e costas.' },
+    fotos: [],
     precoCentavos: 10000,
     precoTeste: true,
     campos: ['tamanho', 'variante'],
@@ -147,6 +155,7 @@ window.LOJA.produtos = Object.freeze([
     situacao: 'em-desenvolvimento',
     imagem: { src: 'corta-vento.webp', tipo: 'mockup', fundo: 'estudio',
       alt: 'Mockup neutro do corta-vento cinza com capuz e zíper, frente e costas.' },
+    fotos: [],
     precoCentavos: 10000,
     precoTeste: true,
     campos: ['tamanho', 'nome', 'variante'],

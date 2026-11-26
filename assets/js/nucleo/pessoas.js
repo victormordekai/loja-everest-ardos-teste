@@ -12,8 +12,9 @@
     const t = LOJA.config.tamanhos;
     return [
       el('option', { value: '', text: primeiro }),
+      el('optgroup', { label: 'Infantil' }, t.infantil.map(x => el('option', { value: x + ' INF', text: x + ' infantil' }))),
       el('optgroup', { label: 'Adulto' }, t.adulto.map(x => el('option', { value: x, text: x }))),
-      el('optgroup', { label: 'Infantil' }, t.infantil.map(x => el('option', { value: x + ' INF', text: x + ' infantil' })))
+      el('optgroup', { label: 'Feminino' }, t.feminino.map(x => el('option', { value: x + ' FEM', text: x + ' feminino' })))
     ];
   }
 

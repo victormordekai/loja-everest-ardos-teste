@@ -4,6 +4,8 @@
 <title>Produto · Loja oficial Colégio Everest × ARDOS</title>
 <meta name="description" content="Escolha tamanho, nome e número e adicione ao carrinho. Uniformes oficiais do Colégio Everest, produzidos pela ARDOS.">
 {{CABECA}}
+<script src="../assets/js/dados/medidas.js" defer></script>
+<script src="../assets/js/nucleo/tabela_medidas.js" defer></script>
 <script src="../assets/js/nucleo/pessoas.js" defer></script>
 <script src="../assets/js/paginas/produto.js" defer></script>
 </head>
@@ -24,55 +26,70 @@
     <a class="botao botao--primario" href="../index.html#produtos">Ver produtos</a>
   </div>
 
-  <article class="produto" data-produto hidden>
-    <div class="produto__galeria">
-      <div class="produto__foto" data-foto-caixa>
-        <img data-foto src="../assets/img/produtos/kit-oficial-everest.webp" alt="" width="1200" height="800">
-      </div>
-      <p class="produto__aviso-foto" data-foto-aviso></p>
-    </div>
-
-    <div>
-      <p class="produto__ref" data-ref></p>
-      <h1 data-nome>Produto</h1>
-      <p data-preco class="produto__preco"></p>
-      <p class="aviso" data-situacao hidden></p>
-      <p data-descricao></p>
-      <ul class="produto__composicao" data-composicao></ul>
-
-      <section class="produto__bloco" aria-labelledby="tamanhos-titulo">
-        <h2 id="tamanhos-titulo">Tamanhos</h2>
-        <table class="tabela-grade">
-          <tbody>
-            <tr><th scope="row">Adulto</th><td><div class="etiquetas" data-tam-adulto></div></td></tr>
-            <tr><th scope="row">Infantil</th><td><div class="etiquetas" data-tam-infantil></div></td></tr>
-            <tr><th scope="row">Medidas</th><td>Tabela de medidas em preparação. Em caso de dúvida, fale com a ARDOS antes de concluir.</td></tr>
-          </tbody>
-        </table>
-      </section>
-
-      <section class="produto__bloco" aria-labelledby="pedido-titulo" data-montar>
-        <h2 id="pedido-titulo">Monte seu pedido</h2>
-        <p>Uma linha por peça. Para comprar para mais de uma pessoa, adicione outra linha.</p>
-        <p class="aviso" data-aviso-personalizacao hidden>Os campos de personalização desta peça ainda serão confirmados com a equipe de Design da ARDOS.</p>
-        <div class="pessoas" data-pessoas></div>
-        <p><button type="button" class="botao botao--tracejado" data-adicionar>＋ Adicionar pessoa</button></p>
-        <div class="resumo-linha">
-          <span data-resumo aria-live="polite"></span>
-          <button type="button" class="botao botao--primario" data-colocar>Adicionar ao carrinho</button>
+  <article data-produto hidden>
+    <div class="produto">
+      <div class="produto__galeria">
+        <div class="produto__foto" data-foto-caixa>
+          <img data-foto src="../assets/img/produtos/kit-oficial-everest.webp" alt="" width="1200" height="800">
         </div>
-        <div class="aviso aviso--erro" role="alert" data-erros></div>
-        <div class="aviso aviso--sucesso" role="status" data-sucesso></div>
-      </section>
+        <p class="produto__aviso-foto"><span data-foto-aviso></span> <span data-zoom-dica></span></p>
+        <ul class="miniaturas" data-miniaturas aria-label="Fotos do produto"></ul>
+      </div>
 
-      <section class="produto__bloco" aria-labelledby="retirada-titulo">
-        <h2 id="retirada-titulo">Retirada e pagamento</h2>
-        <p><strong>Retirada:</strong> no Colégio Everest, em data que a ARDOS vai informar. Não há entrega em casa.</p>
-        <p><strong>Pagamento:</strong> no carrinho, você pode dividir o valor em até 3 links de pagamento.</p>
-        <p>Vai comprar para o time inteiro? <a href="coletiva.html">Use a compra coletiva</a>.</p>
-      </section>
+      <div class="produto__info">
+        <p class="produto__ref" data-ref></p>
+        <h1 data-nome>Produto</h1>
+        <p data-preco class="produto__preco"></p>
+        <p class="aviso" data-situacao hidden></p>
+        <p data-descricao></p>
+        <ul class="produto__composicao" data-composicao></ul>
+
+        <section class="produto__bloco" aria-labelledby="tamanhos-titulo">
+          <h2 id="tamanhos-titulo">Tamanhos</h2>
+          <table class="tabela-grade">
+            <tbody>
+              <tr><th scope="row">Infantil</th><td><div class="etiquetas" data-tam-infantil></div></td></tr>
+              <tr><th scope="row">Adulto</th><td><div class="etiquetas" data-tam-adulto></div></td></tr>
+              <tr><th scope="row">Feminino</th><td><div class="etiquetas" data-tam-feminino></div></td></tr>
+              <tr><th scope="row">Medidas</th><td><button type="button" class="botao botao--secundario botao--pequeno" data-abrir-medidas aria-haspopup="dialog">Ver tabela de medidas</button></td></tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
     </div>
+
+    <section class="produto__pedido" aria-labelledby="pedido-titulo" data-montar>
+      <h2 id="pedido-titulo">Monte seu pedido</h2>
+      <p>Uma linha por peça. Para comprar para mais de uma pessoa, adicione outra linha.</p>
+      <p class="aviso" data-aviso-personalizacao hidden>Os campos de personalização desta peça ainda serão confirmados com a equipe de Design da ARDOS.</p>
+      <div class="pessoas" data-pessoas></div>
+      <p><button type="button" class="botao botao--tracejado" data-adicionar>＋ Adicionar pessoa</button></p>
+      <div class="resumo-linha">
+        <span data-resumo aria-live="polite"></span>
+        <button type="button" class="botao botao--primario" data-colocar>Adicionar ao carrinho</button>
+      </div>
+      <div class="aviso aviso--erro" role="alert" data-erros></div>
+      <div class="aviso aviso--sucesso" role="status" data-sucesso></div>
+    </section>
+
+    <section class="produto__pedido" aria-labelledby="retirada-titulo">
+      <h2 id="retirada-titulo">Retirada e pagamento</h2>
+      <p><strong>Retirada:</strong> no Colégio Everest, em data que a ARDOS vai informar. Não há entrega em casa.</p>
+      <p><strong>Pagamento:</strong> no carrinho, você pode dividir o valor em até 3 links de pagamento.</p>
+      <p>Vai comprar para o time inteiro? <a href="coletiva.html">Use a compra coletiva</a>.</p>
+    </section>
   </article>
+
+  <dialog class="hud" data-hud-medidas aria-labelledby="hud-titulo">
+    <div class="hud__topo">
+      <h2 id="hud-titulo">Tabela de medidas</h2>
+      <div class="hud__acoes">
+        <a class="botao botao--texto" href="tabela_de_medidas.html" target="_blank" rel="noopener">Abrir em nova janela <span aria-hidden="true">↗</span></a>
+        <button type="button" class="hud__fechar" data-fechar-medidas aria-label="Fechar tabela de medidas">×</button>
+      </div>
+    </div>
+    <div class="medidas" data-medidas></div>
+  </dialog>
 </main>
 {{RODAPE}}
 </body>
