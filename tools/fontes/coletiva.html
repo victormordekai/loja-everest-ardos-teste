@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<title>Compra coletiva para o time · Loja oficial Colégio Everest × ARDOS</title>
+<meta name="description" content="Monte a grade do time inteiro em um pedido: tamanho, nome, número, posição e calção de cada atleta, com pagamento único ou por atleta.">
+{{CABECA}}
+<script src="../assets/js/nucleo/pessoas.js" defer></script>
+<script src="../assets/js/paginas/coletiva.js" defer></script>
+</head>
+<body data-raiz="../">
+{{TOPO}}
+<main id="conteudo" class="casca">
+  <header class="secao" aria-labelledby="coletiva-titulo">
+    <span class="rotulo">Compra coletiva</span>
+    <h1 id="coletiva-titulo">Um pedido. O time inteiro.</h1>
+    <p class="lead">Monte uma ou mais equipes, escolha a peça de cada uma e preencha a grade: uma linha por atleta. No carrinho, você decide se o pagamento é do grupo ou de cada atleta.</p>
+    <h2 class="sr-only">Etapas</h2>
+    <ol class="passos">
+      <li><h3>Monte as equipes</h3><p>Nome do time e a peça que ele vai usar.</p></li>
+      <li><h3>Preencha a grade</h3><p>Tamanho, nome, número, posição, calção e variante de cada atleta.</p></li>
+      <li><h3>Confira</h3><p>Veja o resumo por equipe e por tamanho antes de seguir.</p></li>
+      <li><h3>Escolha como pagar</h3><p>No carrinho: um pagamento para o grupo ou um link por atleta.</p></li>
+    </ol>
+  </header>
+
+  <div class="equipes" data-equipes aria-live="polite"></div>
+  <p><button type="button" class="botao botao--tracejado" data-nova-equipe>＋ Adicionar outra equipe</button></p>
+
+  <div class="aviso aviso--erro" role="alert" data-erros></div>
+
+  <section class="painel" data-revisao hidden aria-labelledby="revisao-titulo">
+    <h2 id="revisao-titulo" tabindex="-1">Confira antes de seguir</h2>
+    <div data-revisao-lista></div>
+    <p><button type="button" class="botao botao--primario" data-confirmar>Confirmar e ir para o carrinho</button></p>
+  </section>
+
+  <div class="barra-fixa" role="group" aria-label="Resumo da compra coletiva">
+    <span data-totais aria-live="polite"></span>
+    <button type="button" class="botao botao--primario" data-conferir>Conferir grade <span aria-hidden="true">→</span></button>
+  </div>
+</main>
+{{RODAPE}}
+</body>
+</html>

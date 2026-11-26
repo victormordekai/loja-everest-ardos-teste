@@ -1,0 +1,43 @@
+/* LOJA OFICIAL COLÉGIO EVEREST × ARDOS — TOKENS
+ * Origem de cada valor:
+ *   [ARQUIVO]   lido de arquivo oficial (manual do Everest, logo vetorial ARDOS)
+ *   [DERIVADO]  calculado a partir de um arquivo oficial; precisa de aprovação
+ *   [INTERFACE] valor de interface desta loja (não é cor de marca)
+ * Nenhum valor de cor de marca foi inventado. Os HEX do Everest vêm da
+ * renderização do próprio manual (PDF), cujas cores oficiais estão em CMYK.
+ */
+:root {
+  /* Marca Colégio Everest — manual "logo final 2018" */
+  --everest-bordo: #9e0a0e;   /* [DERIVADO] CMYK 0/100/100/40, amostra do PDF do manual */
+  --everest-azul: #202f64;    /* [DERIVADO] CMYK 100/92/30/24, amostra do PDF do manual */
+  --everest-cinza: #424143;   /* [DERIVADO] CMYK 0/0/0/90, amostra do PDF do manual */
+  --fonte-titulo: Georgia, "Times New Roman", serif;   /* [ARQUIVO] "fonte nome - Georgia" */
+
+  /* Marca ARDOS — usada só no logo (arquivo ardos_logo.svg) */
+  --ardos-marinho: #0d152b;   /* [ARQUIVO] preenchimento do logo vetorial 12/11/2026; cor oficial: PENDENTE */
+
+  /* Interface */
+  --fonte-texto: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* [INTERFACE] */
+  --cor-fundo: #ffffff;            /* [INTERFACE] */
+  --cor-fundo-suave: #f4f3f1;      /* [INTERFACE] */
+  --cor-texto: #1d1c1e;            /* [INTERFACE] */
+  --cor-texto-suave: #545356;      /* [INTERFACE] contraste ≥ 4,5:1 sobre branco e sobre o fundo suave */
+  --cor-linha: #dcdad6;            /* [INTERFACE] */
+  --cor-estudio: #5a5a5a;          /* [INTERFACE] = fundo dos mockups neutros */
+  --cor-sucesso: #1d6b3a;          /* [INTERFACE] */
+  --cor-erro: #9e0a0e;             /* reutiliza o bordô */
+  --cor-aviso-fundo: #fff6dc;      /* [INTERFACE] */
+  --cor-foco: #1a56db;             /* [INTERFACE] anel de foco, distinto das cores de marca */
+
+  /* Espaço e forma */
+  --esp-1: 0.25rem; --esp-2: 0.5rem; --esp-3: 0.75rem; --esp-4: 1rem;
+  --esp-5: 1.5rem; --esp-6: 2rem; --esp-7: 3rem; --esp-8: 4.5rem;
+  --raio: 10px; --raio-grande: 18px;
+  --sombra: 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.08);
+  --sombra-alta: 0 2px 4px rgba(0,0,0,.08), 0 18px 40px rgba(32,47,100,.18);
+  --largura: 1200px;
+
+  /* Movimento */
+  --tempo-rapido: 160ms; --tempo: 320ms; --tempo-lento: 600ms;
+  --curva: cubic-bezier(.2,.7,.2,1);
+}

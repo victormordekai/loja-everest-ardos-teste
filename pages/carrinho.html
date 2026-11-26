@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<title>Carrinho e pagamento · Loja oficial Colégio Everest × ARDOS</title>
+<meta name="description" content="Confira o pedido, informe quem retira na escola e divida o pagamento em até 3 links.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#202f64">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/marcas/favicon_32.png">
+<link rel="apple-touch-icon" href="../assets/img/marcas/favicon_180.png">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/loja.css">
+<script src="../assets/js/config.js" defer></script>
+<script src="../assets/js/dados/produtos.js" defer></script>
+<script src="../assets/js/nucleo/util.js" defer></script>
+<script src="../assets/js/nucleo/divisao.js" defer></script>
+<script src="../assets/js/nucleo/carrinho.js" defer></script>
+<script src="../assets/js/comum.js" defer></script>
+<script src="../assets/js/nucleo/pessoas.js" defer></script>
+<script src="../assets/js/paginas/carrinho.js" defer></script>
+</head>
+<body data-raiz="../">
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="faixa-teste" role="note">
+  <p class="casca"><strong>Versão de teste.</strong> Nenhum pagamento é processado e nenhum dado é enviado. Preços, data de retirada e tabela de medidas ainda serão definidos.</p>
+</div>
+<header class="topo">
+  <div class="casca topo__barra">
+    <a class="topo__marcas" href="../index.html" aria-label="Loja oficial Colégio Everest e ARDOS: página inicial">
+      <img class="everest" src="../assets/img/marcas/everest_horizontal_cor.webp" alt="" width="720" height="292">
+      <span class="vezes" aria-hidden="true">×</span>
+      <img class="ardos" src="../assets/img/marcas/ardos_logo_marinho.svg" alt="" width="128" height="110">
+    </a>
+    <button class="topo__menu" type="button" aria-expanded="false" aria-controls="menu-principal">Menu</button>
+    <nav class="topo__nav" id="menu-principal" aria-label="Principal">
+      <ul>
+        <li><a href="../index.html#produtos">Produtos</a></li>
+        <li><a href="../index.html#como-funciona">Como funciona</a></li>
+        <li><a href="../pages/coletiva.html">Compra coletiva</a></li>
+        <li><a href="../index.html#duvidas">Dúvidas</a></li>
+      </ul>
+    </nav>
+    <a class="topo__carrinho" href="../pages/carrinho.html" aria-current="page"><span class="rotulo-texto">Carrinho</span> <span class="contador" data-contador>0</span></a>
+  </div>
+</header>
+<main id="conteudo" class="casca">
+  <header class="secao" aria-labelledby="carrinho-titulo">
+    <span class="rotulo">Carrinho</span>
+    <h1 id="carrinho-titulo">Confira e finalize o pedido.</h1>
+    <p class="lead">Revise as peças, diga quem retira na escola e escolha como dividir o pagamento.</p>
+  </header>
+
+  <div class="vazio painel" data-vazio hidden>
+    <h2>Seu carrinho está vazio.</h2>
+    <p>Escolha um produto ou monte o pedido do time para começar.</p>
+    <p><a class="botao botao--primario" href="../index.html#produtos">Ver produtos</a> <a class="botao botao--secundario" href="coletiva.html">Compra coletiva</a></p>
+  </div>
+
+  <div class="carrinho" data-cheio hidden>
+    <div>
+      <section class="painel" aria-labelledby="itens-titulo">
+        <h2 id="itens-titulo">Itens do pedido</h2>
+        <ul class="lista-limpa" data-itens></ul>
+        <p class="aviso">O carrinho fica guardado só neste navegador por até 24 horas. Nada é enviado à ARDOS antes de você concluir.</p>
+      </section>
+
+      <section class="painel" aria-labelledby="retirada-titulo">
+        <h2 id="retirada-titulo">Quem retira na escola</h2>
+        <form class="form-grade" data-form novalidate>
+          <div class="campo"><label for="aluno">Nome do aluno</label><input id="aluno" name="aluno" autocomplete="off" maxlength="90" required></div>
+          <div class="campo"><label for="turma">Turma ou série</label><input id="turma" name="turma" autocomplete="off" maxlength="40" required placeholder="Ex.: 7º ano B"></div>
+          <div class="campo largo"><label for="unidade">Unidade</label><select id="unidade" name="unidade" required data-unidades><option value="">Escolha a unidade</option></select></div>
+          <div class="campo largo"><label for="responsavel">Nome do responsável pela compra</label><input id="responsavel" name="responsavel" autocomplete="name" maxlength="90" required></div>
+          <div class="campo"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" maxlength="120" required></div>
+          <div class="campo"><label for="telefone">Celular com DDD</label><input id="telefone" name="telefone" type="tel" autocomplete="tel" maxlength="20" required placeholder="(41) 9...."></div>
+          <label class="consentimento largo"><input type="checkbox" name="consentimento" required> <span>Concordo que a ARDOS use estes dados só para produzir, cobrar e entregar este pedido, como explicado em <a href="privacidade.html">Privacidade e dados pessoais</a>.</span></label>
+        </form>
+        <p><strong>Retirada:</strong> no Colégio Everest. Data e horário: a ARDOS vai informar.</p>
+      </section>
+
+      <section class="painel" aria-labelledby="pagamento-titulo">
+        <h2 id="pagamento-titulo">Pagamento</h2>
+        <div data-sem-preco hidden>
+          <p class="aviso">Os preços desta loja ainda não foram definidos. Para testar a divisão do pagamento, ligue a simulação com um valor fictício.</p>
+          <label class="consentimento"><input type="checkbox" data-simular> <span>Simular com valor fictício de R$ 100,00 por peça (só para teste)</span></label>
+        </div>
+        <fieldset class="opcoes" data-modo hidden>
+          <legend>Como o time vai pagar?</legend>
+          <label class="opcao"><input type="radio" name="modo" value="pedido" checked> <span><strong>Um pagamento para o pedido inteiro</strong><small>O organizador paga tudo, dividindo em até 3 cartões.</small></span></label>
+          <label class="opcao"><input type="radio" name="modo" value="por-atleta"> <span><strong>Um pagamento para cada atleta</strong><small>Cada atleta recebe o próprio link e pode dividir em até 3 cartões.</small></span></label>
+        </fieldset>
+        <p data-explica-divisao>Cada cobrança pode ser dividida em até 3 links de pagamento. Escolha em quantas partes e o valor de cada uma.</p>
+        <div data-cobrancas></div>
+      </section>
+    </div>
+
+    <aside class="painel" aria-labelledby="resumo-titulo">
+      <h2 id="resumo-titulo">Resumo</h2>
+      <div class="totais" data-totais></div>
+      <p class="aviso" data-simulacao-aviso hidden>Valores fictícios de simulação. Não são preços.</p>
+      <p><button type="button" class="botao botao--primario" data-concluir>Concluir pedido de teste</button></p>
+      <div class="aviso aviso--erro" role="alert" data-erros></div>
+      <section data-resultado hidden aria-labelledby="resultado-titulo">
+        <h2 id="resultado-titulo" tabindex="-1">Pedido de teste gerado</h2>
+        <p class="aviso aviso--sucesso">Nada foi enviado nem cobrado. Na versão em produção, cada linha abaixo será um link de pagamento real criado pela ARDOS.</p>
+        <div data-links></div>
+        <p><button type="button" class="botao botao--secundario" data-copiar>Copiar resumo</button> <button type="button" class="botao botao--texto" data-baixar>Baixar JSON</button></p>
+        <p class="cobranca__estado" data-copiado role="status"></p>
+        <p><button type="button" class="botao botao--texto" data-limpar>Esvaziar carrinho</button></p>
+      </section>
+    </aside>
+  </div>
+</main>
+<footer class="rodape">
+  <div class="casca rodape__grade">
+    <div>
+      <div class="rodape__marcas">
+        <a href="https://www.colegioeverest.curitiba.br/pt-br/home" target="_blank" rel="noopener noreferrer">
+          <img class="everest" src="../assets/img/marcas/everest_horizontal_branco.webp" alt="Colégio Everest Internacional: site oficial (abre em nova aba)" width="720" height="287">
+        </a>
+        <span class="vezes" aria-hidden="true">×</span>
+        <a href="https://www.ardos.com.br/" target="_blank" rel="noopener noreferrer">
+          <img class="ardos" src="../assets/img/marcas/ardos_logo_branco.svg" alt="ARDOS: site oficial (abre em nova aba)" width="128" height="110">
+        </a>
+      </div>
+      <p class="rodape__assinatura">Vestimos Identidades. Entregamos Confiança.</p>
+      <p>Loja oficial de uniformes esportivos do Colégio Everest. Produção, venda e atendimento: ARDOS.</p>
+    </div>
+    <div>
+      <h2>Fale com a ARDOS</h2>
+      <ul>
+        <li><a href="https://api.whatsapp.com/send?phone=5541997650283" target="_blank" rel="noopener noreferrer">WhatsApp (41) 99765-0283 <span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a></li>
+        <li><a href="tel:+554133498356">Telefone (41) 3349-8356</a></li>
+        <li><a href="mailto:contato@ardos.com.br">contato@ardos.com.br</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Encontre a ARDOS</h2>
+      <address>Rua Alagoas, 3340 · Portão<br>Curitiba — PR<br>CEP 80610-200</address>
+    </div>
+    <div>
+      <h2>Sites oficiais</h2>
+      <ul>
+        <li><a href="https://www.ardos.com.br/" target="_blank" rel="noopener noreferrer">ARDOS <span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a></li>
+        <li><a href="https://www.colegioeverest.curitiba.br/pt-br/home" target="_blank" rel="noopener noreferrer">Colégio Everest <span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a></li>
+        <li><a href="../pages/privacidade.html">Privacidade e dados pessoais</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="casca rodape__base">
+    <span>© 2026 ARDOS. Marca Colégio Everest usada em parceria com a escola.</span>
+    <span>Loja Everest × ARDOS · versão v0.1.0 · teste · 26/11/2026</span>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,126 @@
+"""Teste de navegador da loja: fluxos, console, CSP, rolagem horizontal e capturas."""
+import sys, json
+from playwright.sync_api import sync_playwright
+BASE = sys.argv[1]; OUT = sys.argv[2]
+falhas = []; notas = []
+def checar(cond, msg):
+    (notas if cond else falhas).append(("OK " if cond else "FALHA ") + msg)
+
+with sync_playwright() as p:
+    nav = p.chromium.launch(executable_path="/usr/bin/google-chrome", args=["--no-sandbox"])
+    for largura in (390, 820, 1440):
+        ctx = nav.new_context(viewport={"width": largura, "height": 900})
+        pg = ctx.new_page(); erros = []
+        pg.on("console", lambda m: erros.append(m.text) if m.type in ("error", "warning") else None)
+        pg.on("pageerror", lambda e: erros.append(str(e)))
+        for rota in ("index.html", "pages/produto.html#kit-oficial-everest", "pages/coletiva.html", "pages/carrinho.html", "pages/privacidade.html", "pages/produto.html#nao-existe"):
+            pg.goto(BASE + rota); pg.wait_for_timeout(700)
+            sobra = pg.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
+            checar(sobra <= 0, f"{largura}px {rota}: sem rolagem horizontal ({sobra})")
+            if largura in (390, 1440) and rota in ("index.html", "pages/produto.html#kit-oficial-everest", "pages/coletiva.html"):
+                if rota == "index.html":
+                    pg.evaluate("window.scrollTo(0, document.querySelector('#produtos').offsetTop)"); pg.wait_for_timeout(1200)
+                nome = rota.split('/')[-1].split('?')[0].replace('.html','')
+                pg.screenshot(path=f"{OUT}/{nome}_{largura}.png", full_page=(rota=="index.html"))
+        checar(not erros, f"{largura}px: console sem erro/aviso {erros[:3]}")
+        ctx.close()
+
+    # Fluxo completo em 1280
+    ctx = nav.new_context(viewport={"width": 1280, "height": 900}, accept_downloads=True)
+    pg = ctx.new_page(); erros = []
+    pg.on("console", lambda m: erros.append(m.text) if m.type in ("error", "warning") else None)
+    pg.on("pageerror", lambda e: erros.append(str(e)))
+    pg.goto(BASE + "index.html"); pg.wait_for_timeout(500)
+    checar(pg.locator(".cartao").count() == 8, "vitrine com 7 produtos + compra coletiva")
+    pg.click('[data-filtro="camisas"]'); pg.wait_for_timeout(600)
+    vis = pg.locator(".cartao:not([hidden])").count()
+    checar(vis == 3, f"filtro Camisas mostra 2 + coletiva ({vis})")
+    checar("2 produtos em Camisas" in pg.inner_text("[data-contagem]"), "contagem do filtro")
+    checar(pg.get_attribute('[data-filtro="camisas"]', "aria-pressed") == "true", "aria-pressed no filtro")
+    # teclado: skip link
+    pg.goto(BASE + "index.html"); pg.wait_for_timeout(300); pg.keyboard.press("Tab"); checar(pg.evaluate("document.activeElement.className") == "skip", "primeiro Tab vai ao link de salto")
+    # menu celular com Esc
+    # produto
+    pg.goto(BASE + "pages/produto.html#kit-oficial-everest"); pg.wait_for_timeout(400)
+    checar(pg.inner_text("h1") == "Kit Oficial Colégio Everest × ARDOS", "título do produto")
+    pg.click("[data-colocar]"); pg.wait_for_timeout(200)
+    checar("escolha o tamanho" in pg.inner_text("[data-erros]"), "erro sem tamanho")
+    pg.select_option('.pessoa >> nth=0 >> [name="tamanho"]', "M")
+    pg.click("[data-colocar]")
+    checar("nome ou o número" in pg.inner_text("[data-erros]"), "kit oficial exige nome ou número")
+    pg.fill('.pessoa >> nth=0 >> [name="nome"]', "teste um")
+    pg.type('.pessoa >> nth=0 >> [name="numero"]', "1a0b5")
+    checar(pg.input_value('.pessoa >> nth=0 >> [name="numero"]') == "105", "número só aceita 3 dígitos")
+    checar(pg.input_value('.pessoa >> nth=0 >> [name="nome"]') == "TESTE UM", "nome em caixa alta")
+    pg.click("[data-adicionar]")
+    pg.select_option('.pessoa >> nth=1 >> [name="tamanho"]', "10 INF")
+    pg.fill('.pessoa >> nth=1 >> [name="numero"]', "7")
+    pg.select_option('.pessoa >> nth=1 >> [name="tamCalcao"]', "12 INF")
+    pg.click("[data-colocar]"); pg.wait_for_timeout(300)
+    checar("2 peças adicionadas" in pg.inner_text("[data-sucesso]"), "2 peças no carrinho")
+    checar(pg.inner_text("[data-contador]").strip() == "2", "contador do topo = 2")
+    # coletiva
+    pg.goto(BASE + "pages/coletiva.html"); pg.wait_for_timeout(400)
+    pg.fill('[name="nomeEquipe"]', "futsal sub-15")
+    pg.select_option('[name="produto"]', "camisa-regata")
+    for i in range(3):
+        if i: pg.click("[data-novo-atleta]")
+        pg.select_option(f'.pessoa >> nth={i} >> [name="tamanho"]', ["P", "M", "G"][i])
+        pg.fill(f'.pessoa >> nth={i} >> [name="nome"]', f"atleta {i+1}")
+        pg.fill(f'.pessoa >> nth={i} >> [name="numero"]', "9" if i < 2 else "3")
+    pg.click("[data-nova-equipe]")
+    pg.click("[data-conferir]"); pg.wait_for_timeout(200)
+    checar("Equipe 2: informe o nome" in pg.inner_text("[data-erros]"), "equipe sem nome bloqueia")
+    pg.click('.equipe >> nth=1 >> [data-remover-equipe]')
+    pg.click("[data-conferir]"); pg.wait_for_timeout(300)
+    rev = pg.inner_text("[data-revisao]")
+    checar("número repetido" in rev, "aviso de número repetido")
+    checar("FUTSAL SUB-15 · Camisa Regata" in rev, "revisão por equipe")
+    pg.screenshot(path=f"{OUT}/coletiva_revisao_1280.png", full_page=True)
+    pg.click("[data-confirmar]"); pg.wait_for_load_state(); pg.wait_for_timeout(500)
+    checar("carrinho.html" in pg.url, "segue para o carrinho")
+    checar(pg.inner_text("[data-contador]").strip() == "5", "contador = 5")
+    checar(pg.is_disabled("[data-concluir]"), "concluir bloqueado sem preço")
+    pg.check("[data-simular]"); pg.wait_for_timeout(200)
+    checar("R$ 500,00" in pg.inner_text("[data-totais]"), "simulação: 5 × R$ 100 = R$ 500")
+    pg.check('input[name="modo"][value="por-atleta"]'); pg.wait_for_timeout(200)
+    checar(pg.locator(".cobranca").count() == 4, f"por atleta: 3 atletas + avulsos = 4 cobranças ({pg.locator('.cobranca').count()})")
+    pg.check('input[name="modo"][value="pedido"]'); pg.wait_for_timeout(200)
+    pg.select_option("#cob-0-n", "3"); pg.wait_for_timeout(100)
+    checar("166,67 + R$ 166,67 + R$ 166,66" in pg.inner_text(".cobranca__estado"), "divisão igual em 3")
+    pg.fill("#cob-0-p0", "100"); pg.fill("#cob-0-p1", "150"); pg.fill("#cob-0-p2", "200")
+    checar("Faltam R$ 50,00" in pg.inner_text(".cobranca__estado"), "aviso de diferença")
+    pg.click("[data-concluir]"); pg.wait_for_timeout(200)
+    e = pg.inner_text("[data-erros]")
+    checar("nome do aluno" in e and "divisão não fecha" in e, "conclusão bloqueada com dados faltando e divisão aberta")
+    pg.fill("#cob-0-p2", "250")
+    pg.fill("#aluno", "Aluno Teste"); pg.fill("#turma", "7B"); pg.select_option("#unidade", index=2)
+    pg.fill("#responsavel", "Responsavel Teste"); pg.fill("#email", "teste@exemplo.com"); pg.fill("#telefone", "41999999999")
+    pg.check('[name="consentimento"]')
+    pg.click("[data-concluir]"); pg.wait_for_timeout(300)
+    checar(pg.is_visible("[data-resultado]"), "pedido de teste gerado")
+    links = pg.locator(".link-demo").count(); checar(links == 3, f"3 links de teste ({links})")
+    with pg.expect_download() as d: pg.click("[data-baixar]")
+    caminho = d.value.path(); dado = json.load(open(caminho, encoding="utf-8"))
+    checar(dado["ambiente"] == "TESTE" and dado["valoresFicticios"] is True, "JSON marcado como teste e valores fictícios")
+    checar(sum(l["valorCentavos"] for l in dado["cobrancas"][0]["links"]) == 50000, "JSON: links somam o total")
+    pg.screenshot(path=f"{OUT}/carrinho_1280.png", full_page=True)
+    pg.click("[data-limpar]"); pg.wait_for_timeout(200)
+    checar(pg.is_visible("[data-vazio]"), "esvaziar carrinho")
+    # ataque: texto com HTML no nome não vira HTML
+    pg.goto(BASE + "pages/produto.html#camisa-babylook")
+    pg.select_option('[name="tamanho"]', "P"); pg.fill('[name="nome"]', '<img src=x onerror=alert(1)>')
+    pg.click("[data-colocar]"); pg.goto(BASE + "pages/carrinho.html"); pg.wait_for_timeout(300)
+    checar(pg.locator("[data-itens] img[src='x']").count() == 0 and "<IMG SRC=X" in pg.inner_text("[data-itens]"), "texto com HTML aparece como texto")
+    pg.goto(BASE + "pages/produto.html#%3Cscript%3E"); checar(pg.is_visible("[data-nao-encontrado]"), "slug inválido mostra não encontrado")
+    checar(not erros, f"fluxo: console sem erro/aviso {erros[:3]}")
+    ctx.close()
+    # Celular: menu
+    ctx = nav.new_context(viewport={"width": 390, "height": 844}, has_touch=True); pg = ctx.new_page()
+    pg.goto(BASE + "index.html"); pg.click(".topo__menu")
+    checar(pg.is_visible("#menu-principal"), "menu abre no celular")
+    pg.keyboard.press("Escape"); checar(not pg.is_visible("#menu-principal"), "Esc fecha o menu")
+    pg.goto(BASE + "pages/carrinho.html"); pg.wait_for_timeout(300); pg.screenshot(path=f"{OUT}/carrinho_390.png", full_page=True)
+    ctx.close(); nav.close()
+
+print("\n".join(notas)); print("\n".join(falhas)); print(f"\n{len(notas)} OK · {len(falhas)} FALHAS")

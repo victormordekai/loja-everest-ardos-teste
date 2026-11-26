@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<title>Carrinho e pagamento · Loja oficial Colégio Everest × ARDOS</title>
+<meta name="description" content="Confira o pedido, informe quem retira na escola e divida o pagamento em até 3 links.">
+{{CABECA}}
+<script src="../assets/js/nucleo/pessoas.js" defer></script>
+<script src="../assets/js/paginas/carrinho.js" defer></script>
+</head>
+<body data-raiz="../">
+{{TOPO}}
+<main id="conteudo" class="casca">
+  <header class="secao" aria-labelledby="carrinho-titulo">
+    <span class="rotulo">Carrinho</span>
+    <h1 id="carrinho-titulo">Confira e finalize o pedido.</h1>
+    <p class="lead">Revise as peças, diga quem retira na escola e escolha como dividir o pagamento.</p>
+  </header>
+
+  <div class="vazio painel" data-vazio hidden>
+    <h2>Seu carrinho está vazio.</h2>
+    <p>Escolha um produto ou monte o pedido do time para começar.</p>
+    <p><a class="botao botao--primario" href="../index.html#produtos">Ver produtos</a> <a class="botao botao--secundario" href="coletiva.html">Compra coletiva</a></p>
+  </div>
+
+  <div class="carrinho" data-cheio hidden>
+    <div>
+      <section class="painel" aria-labelledby="itens-titulo">
+        <h2 id="itens-titulo">Itens do pedido</h2>
+        <ul class="lista-limpa" data-itens></ul>
+        <p class="aviso">O carrinho fica guardado só neste navegador por até 24 horas. Nada é enviado à ARDOS antes de você concluir.</p>
+      </section>
+
+      <section class="painel" aria-labelledby="retirada-titulo">
+        <h2 id="retirada-titulo">Quem retira na escola</h2>
+        <form class="form-grade" data-form novalidate>
+          <div class="campo"><label for="aluno">Nome do aluno</label><input id="aluno" name="aluno" autocomplete="off" maxlength="90" required></div>
+          <div class="campo"><label for="turma">Turma ou série</label><input id="turma" name="turma" autocomplete="off" maxlength="40" required placeholder="Ex.: 7º ano B"></div>
+          <div class="campo largo"><label for="unidade">Unidade</label><select id="unidade" name="unidade" required data-unidades><option value="">Escolha a unidade</option></select></div>
+          <div class="campo largo"><label for="responsavel">Nome do responsável pela compra</label><input id="responsavel" name="responsavel" autocomplete="name" maxlength="90" required></div>
+          <div class="campo"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" maxlength="120" required></div>
+          <div class="campo"><label for="telefone">Celular com DDD</label><input id="telefone" name="telefone" type="tel" autocomplete="tel" maxlength="20" required placeholder="(41) 9...."></div>
+          <label class="consentimento largo"><input type="checkbox" name="consentimento" required> <span>Concordo que a ARDOS use estes dados só para produzir, cobrar e entregar este pedido, como explicado em <a href="privacidade.html">Privacidade e dados pessoais</a>.</span></label>
+        </form>
+        <p><strong>Retirada:</strong> no Colégio Everest. Data e horário: a ARDOS vai informar.</p>
+      </section>
+
+      <section class="painel" aria-labelledby="pagamento-titulo">
+        <h2 id="pagamento-titulo">Pagamento</h2>
+        <div data-sem-preco hidden>
+          <p class="aviso">Os preços desta loja ainda não foram definidos. Para testar a divisão do pagamento, ligue a simulação com um valor fictício.</p>
+          <label class="consentimento"><input type="checkbox" data-simular> <span>Simular com valor fictício de R$ 100,00 por peça (só para teste)</span></label>
+        </div>
+        <fieldset class="opcoes" data-modo hidden>
+          <legend>Como o time vai pagar?</legend>
+          <label class="opcao"><input type="radio" name="modo" value="pedido" checked> <span><strong>Um pagamento para o pedido inteiro</strong><small>O organizador paga tudo, dividindo em até 3 cartões.</small></span></label>
+          <label class="opcao"><input type="radio" name="modo" value="por-atleta"> <span><strong>Um pagamento para cada atleta</strong><small>Cada atleta recebe o próprio link e pode dividir em até 3 cartões.</small></span></label>
+        </fieldset>
+        <p data-explica-divisao>Cada cobrança pode ser dividida em até 3 links de pagamento. Escolha em quantas partes e o valor de cada uma.</p>
+        <div data-cobrancas></div>
+      </section>
+    </div>
+
+    <aside class="painel" aria-labelledby="resumo-titulo">
+      <h2 id="resumo-titulo">Resumo</h2>
+      <div class="totais" data-totais></div>
+      <p class="aviso" data-simulacao-aviso hidden>Valores fictícios de simulação. Não são preços.</p>
+      <p><button type="button" class="botao botao--primario" data-concluir>Concluir pedido de teste</button></p>
+      <div class="aviso aviso--erro" role="alert" data-erros></div>
+      <section data-resultado hidden aria-labelledby="resultado-titulo">
+        <h2 id="resultado-titulo" tabindex="-1">Pedido de teste gerado</h2>
+        <p class="aviso aviso--sucesso">Nada foi enviado nem cobrado. Na versão em produção, cada linha abaixo será um link de pagamento real criado pela ARDOS.</p>
+        <div data-links></div>
+        <p><button type="button" class="botao botao--secundario" data-copiar>Copiar resumo</button> <button type="button" class="botao botao--texto" data-baixar>Baixar JSON</button></p>
+        <p class="cobranca__estado" data-copiado role="status"></p>
+        <p><button type="button" class="botao botao--texto" data-limpar>Esvaziar carrinho</button></p>
+      </section>
+    </aside>
+  </div>
+</main>
+{{RODAPE}}
+</body>
+</html>

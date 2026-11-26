@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<title>Produto · Loja oficial Colégio Everest × ARDOS</title>
+<meta name="description" content="Escolha tamanho, nome e número e adicione ao carrinho. Uniformes oficiais do Colégio Everest, produzidos pela ARDOS.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#202f64">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/img/marcas/favicon_32.png">
+<link rel="apple-touch-icon" href="../assets/img/marcas/favicon_180.png">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/loja.css">
+<script src="../assets/js/config.js" defer></script>
+<script src="../assets/js/dados/produtos.js" defer></script>
+<script src="../assets/js/nucleo/util.js" defer></script>
+<script src="../assets/js/nucleo/divisao.js" defer></script>
+<script src="../assets/js/nucleo/carrinho.js" defer></script>
+<script src="../assets/js/comum.js" defer></script>
+<script src="../assets/js/nucleo/pessoas.js" defer></script>
+<script src="../assets/js/paginas/produto.js" defer></script>
+</head>
+<body data-raiz="../">
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="faixa-teste" role="note">
+  <p class="casca"><strong>Versão de teste.</strong> Nenhum pagamento é processado e nenhum dado é enviado. Preços, data de retirada e tabela de medidas ainda serão definidos.</p>
+</div>
+<header class="topo">
+  <div class="casca topo__barra">
+    <a class="topo__marcas" href="../index.html" aria-label="Loja oficial Colégio Everest e ARDOS: página inicial">
+      <img class="everest" src="../assets/img/marcas/everest_horizontal_cor.webp" alt="" width="720" height="292">
+      <span class="vezes" aria-hidden="true">×</span>
+      <img class="ardos" src="../assets/img/marcas/ardos_logo_marinho.svg" alt="" width="128" height="110">
+    </a>
+    <button class="topo__menu" type="button" aria-expanded="false" aria-controls="menu-principal">Menu</button>
+    <nav class="topo__nav" id="menu-principal" aria-label="Principal">
+      <ul>
+        <li><a href="../index.html#produtos" aria-current="page">Produtos</a></li>
+        <li><a href="../index.html#como-funciona">Como funciona</a></li>
+        <li><a href="../pages/coletiva.html">Compra coletiva</a></li>
+        <li><a href="../index.html#duvidas">Dúvidas</a></li>
+      </ul>
+    </nav>
+    <a class="topo__carrinho" href="../pages/carrinho.html"><span class="rotulo-texto">Carrinho</span> <span class="contador" data-contador>0</span></a>
+  </div>
+</header>
+<main id="conteudo" class="casca">
+  <nav class="trilha" aria-label="Você está em">
+    <ol>
+      <li><a href="../index.html">Início</a></li>
+      <li><a href="../index.html#produtos">Produtos</a></li>
+      <li aria-current="page" data-trilha-atual>Produto</li>
+    </ol>
+  </nav>
+
+  <div data-nao-encontrado hidden class="vazio">
+    <h2>Produto não encontrado</h2>
+    <p>O endereço pode estar incompleto. Volte à lista e escolha o produto de novo.</p>
+    <a class="botao botao--primario" href="../index.html#produtos">Ver produtos</a>
+  </div>
+
+  <article class="produto" data-produto hidden>
+    <div class="produto__galeria">
+      <div class="produto__foto" data-foto-caixa>
+        <img data-foto src="../assets/img/produtos/kit-oficial-everest.webp" alt="" width="1200" height="800">
+      </div>
+      <p class="produto__aviso-foto" data-foto-aviso></p>
+    </div>
+
+    <div>
+      <p class="produto__ref" data-ref></p>
+      <h1 data-nome>Produto</h1>
+      <p data-preco class="produto__preco"></p>
+      <p data-descricao></p>
+      <ul class="produto__composicao" data-composicao></ul>
+
+      <section class="produto__bloco" aria-labelledby="tamanhos-titulo">
+        <h2 id="tamanhos-titulo">Tamanhos</h2>
+        <table class="tabela-grade">
+          <tbody>
+            <tr><th scope="row">Adulto</th><td><div class="etiquetas" data-tam-adulto></div></td></tr>
+            <tr><th scope="row">Infantil</th><td><div class="etiquetas" data-tam-infantil></div></td></tr>
+            <tr><th scope="row">Medidas</th><td>Tabela de medidas em preparação. Em caso de dúvida, fale com a ARDOS antes de concluir.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="produto__bloco" aria-labelledby="pedido-titulo">
+        <h2 id="pedido-titulo">Monte seu pedido</h2>
+        <p>Uma linha por peça. Para comprar para mais de uma pessoa, adicione outra linha.</p>
+        <p class="aviso" data-aviso-personalizacao hidden>Os campos de personalização desta peça ainda serão confirmados com a equipe de Design da ARDOS.</p>
+        <div class="pessoas" data-pessoas></div>
+        <p><button type="button" class="botao botao--tracejado" data-adicionar>＋ Adicionar pessoa</button></p>
+        <div class="resumo-linha">
+          <span data-resumo aria-live="polite"></span>
+          <button type="button" class="botao botao--primario" data-colocar>Adicionar ao carrinho</button>
+        </div>
+        <div class="aviso aviso--erro" role="alert" data-erros></div>
+        <div class="aviso aviso--sucesso" role="status" data-sucesso></div>
+      </section>
+
+      <section class="produto__bloco" aria-labelledby="retirada-titulo">
+        <h2 id="retirada-titulo">Retirada e pagamento</h2>
+        <p><strong>Retirada:</strong> no Colégio Everest, em data que a ARDOS vai informar. Não há entrega em casa.</p>
+        <p><strong>Pagamento:</strong> no carrinho, você pode dividir o valor em até 3 links de pagamento.</p>
+        <p>Vai comprar para o time inteiro? <a href="coletiva.html">Use a compra coletiva</a>.</p>
+      </section>
+    </div>
+  </article>
+</main>
+<footer class="rodape">
+  <div class="casca rodape__grade">
+    <div>
+      <div class="rodape__marcas">
+        <a href="https://www.colegioeverest.curitiba.br/pt-br/home" target="_blank" rel="noopener noreferrer">
+          <img class="everest" src="../assets/img/marcas/everest_horizontal_branco.webp" alt="Colégio Everest Internacional: site oficial (abre em nova aba)" width="720" height="287">
+        </a>
+        <span class="vezes" aria-hidden="true">×</span>
+        <a href="https://www.ardos.com.br/" target="_blank" rel="noopener noreferrer">
+          <img class="ardos" src="../assets/img/marcas/ardos_logo_branco.svg" alt="ARDOS: site oficial (abre em nova aba)" width="128" height="110">
+        </a>
+      </div>
+      <p class="rodape__assinatura">Vestimos Identidades. Entregamos Confiança.</p>
+      <p>Loja oficial de uniformes esportivos do Colégio Everest. Produção, venda e atendimento: ARDOS.</p>
+    </div>
+    <div>
+      <h2>Fale com a ARDOS</h2>
+      <ul>
+        <li><a href="https://api.whatsapp.com/send?phone=5541997650283" target="_blank" rel="noopener noreferrer">WhatsApp (41) 99765-0283 <span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a></li>
+        <li><a href="tel:+554133498356">Telefone (41) 3349-8356</a></li>
+        <li><a href="mailto:contato@ardos.com.br">contato@ardos.com.br</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Encontre a ARDOS</h2>
+      <address>Rua Alagoas, 3340 · Portão<br>Curitiba — PR<br>CEP 80610-200</address>
+    </div>
+    <div>
+      <h2>Sites oficiais</h2>
+      <ul>
+        <li><a href="https://www.ardos.com.br/" target="_blank" rel="noopener noreferrer">ARDOS <span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a></li>
+        <li><a href="https://www.colegioeverest.curitiba.br/pt-br/home" target="_blank" rel="noopener noreferrer">Colégio Everest <span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a></li>
+        <li><a href="../pages/privacidade.html">Privacidade e dados pessoais</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="casca rodape__base">
+    <span>© 2026 ARDOS. Marca Colégio Everest usada em parceria com a escola.</span>
+    <span>Loja Everest × ARDOS · versão v0.1.0 · teste · 26/11/2026</span>
+  </div>
+</footer>
+</body>
+</html>

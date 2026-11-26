@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<title>Produto · Loja oficial Colégio Everest × ARDOS</title>
+<meta name="description" content="Escolha tamanho, nome e número e adicione ao carrinho. Uniformes oficiais do Colégio Everest, produzidos pela ARDOS.">
+{{CABECA}}
+<script src="../assets/js/nucleo/pessoas.js" defer></script>
+<script src="../assets/js/paginas/produto.js" defer></script>
+</head>
+<body data-raiz="../">
+{{TOPO}}
+<main id="conteudo" class="casca">
+  <nav class="trilha" aria-label="Você está em">
+    <ol>
+      <li><a href="../index.html">Início</a></li>
+      <li><a href="../index.html#produtos">Produtos</a></li>
+      <li aria-current="page" data-trilha-atual>Produto</li>
+    </ol>
+  </nav>
+
+  <div data-nao-encontrado hidden class="vazio">
+    <h2>Produto não encontrado</h2>
+    <p>O endereço pode estar incompleto. Volte à lista e escolha o produto de novo.</p>
+    <a class="botao botao--primario" href="../index.html#produtos">Ver produtos</a>
+  </div>
+
+  <article class="produto" data-produto hidden>
+    <div class="produto__galeria">
+      <div class="produto__foto" data-foto-caixa>
+        <img data-foto src="../assets/img/produtos/kit-oficial-everest.webp" alt="" width="1200" height="800">
+      </div>
+      <p class="produto__aviso-foto" data-foto-aviso></p>
+    </div>
+
+    <div>
+      <p class="produto__ref" data-ref></p>
+      <h1 data-nome>Produto</h1>
+      <p data-preco class="produto__preco"></p>
+      <p data-descricao></p>
+      <ul class="produto__composicao" data-composicao></ul>
+
+      <section class="produto__bloco" aria-labelledby="tamanhos-titulo">
+        <h2 id="tamanhos-titulo">Tamanhos</h2>
+        <table class="tabela-grade">
+          <tbody>
+            <tr><th scope="row">Adulto</th><td><div class="etiquetas" data-tam-adulto></div></td></tr>
+            <tr><th scope="row">Infantil</th><td><div class="etiquetas" data-tam-infantil></div></td></tr>
+            <tr><th scope="row">Medidas</th><td>Tabela de medidas em preparação. Em caso de dúvida, fale com a ARDOS antes de concluir.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="produto__bloco" aria-labelledby="pedido-titulo">
+        <h2 id="pedido-titulo">Monte seu pedido</h2>
+        <p>Uma linha por peça. Para comprar para mais de uma pessoa, adicione outra linha.</p>
+        <p class="aviso" data-aviso-personalizacao hidden>Os campos de personalização desta peça ainda serão confirmados com a equipe de Design da ARDOS.</p>
+        <div class="pessoas" data-pessoas></div>
+        <p><button type="button" class="botao botao--tracejado" data-adicionar>＋ Adicionar pessoa</button></p>
+        <div class="resumo-linha">
+          <span data-resumo aria-live="polite"></span>
+          <button type="button" class="botao botao--primario" data-colocar>Adicionar ao carrinho</button>
+        </div>
+        <div class="aviso aviso--erro" role="alert" data-erros></div>
+        <div class="aviso aviso--sucesso" role="status" data-sucesso></div>
+      </section>
+
+      <section class="produto__bloco" aria-labelledby="retirada-titulo">
+        <h2 id="retirada-titulo">Retirada e pagamento</h2>
+        <p><strong>Retirada:</strong> no Colégio Everest, em data que a ARDOS vai informar. Não há entrega em casa.</p>
+        <p><strong>Pagamento:</strong> no carrinho, você pode dividir o valor em até 3 links de pagamento.</p>
+        <p>Vai comprar para o time inteiro? <a href="coletiva.html">Use a compra coletiva</a>.</p>
+      </section>
+    </div>
+  </article>
+</main>
+{{RODAPE}}
+</body>
+</html>
