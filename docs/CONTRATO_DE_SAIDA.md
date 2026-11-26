@@ -74,4 +74,6 @@ Tom: claro, não técnico; acolhedor, não infantil; institucional, não burocr�
 
 ## 9. Aprovação
 
-PENDENTE: de acordo de Rafael ou Victor, com data, no chat.
+- 26/11/2026, 16:32 — Victor informou no chat que o cliente (Colégio Everest) aprovou a versão de teste do MVP (v0.4.x). [F: mensagem de Victor]
+- Homologação formal da entrega (Gate) segue com Rafael ou Victor, com data e evidência. Pendências de dados (preços, medidas femininas, retirada, pagamento) continuam na seção 8.
+- Próximo episódio definido por Victor: versão WordPress e links de pagamento.
