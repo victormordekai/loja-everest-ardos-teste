@@ -9,6 +9,12 @@
 .faixa-teste p { margin: 0; padding: var(--esp-2) 0; }
 
 /* ---------- Cabeçalho ---------- */
+.faixa-escola { background: var(--everest-azul); color: #d5dbef; font-size: .82rem; }
+.faixa-escola__barra { display: flex; justify-content: space-between; align-items: center; gap: var(--esp-3); min-height: 36px; }
+.faixa-escola p { margin: 0; }
+.faixa-escola__lema { font-family: var(--fonte-titulo); font-style: italic; color: #fff; margin-right: var(--esp-2); padding-right: var(--esp-2); border-right: 1px solid rgba(255,255,255,.3); }
+.faixa-escola a { color: #fff; font-weight: 600; white-space: nowrap; text-decoration: none; }
+.faixa-escola a:hover { color: #ffd9da; text-decoration: underline; }
 .topo { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.94); backdrop-filter: saturate(1.4) blur(8px); border-bottom: 1px solid var(--cor-linha); }
 .topo__barra { display: flex; align-items: center; gap: var(--esp-4); min-height: 72px; }
 .topo__marcas { display: flex; align-items: center; gap: var(--esp-3); text-decoration: none; margin-right: auto; }
@@ -47,7 +53,7 @@
   transform: translateX(0); animation: faixa-entra 1.1s var(--curva) both;
 }
 @keyframes faixa-entra { from { transform: translateX(18%); opacity: 0; } to { transform: none; opacity: 1; } }
-.hero__grade { position: relative; display: grid; grid-template-columns: 1.05fr 1fr; gap: var(--esp-6); align-items: center; padding: var(--esp-8) 0; }
+.hero__grade { position: relative; display: grid; grid-template-columns: 1.05fr 1fr; gap: var(--esp-6); align-items: center; padding: var(--esp-8) 0 calc(var(--esp-8) + var(--onda-altura) * .6); }
 .hero h1 { color: #fff; }
 .hero h1 span { display: block; color: #ffd9da; font-style: italic; }
 .hero__selo { display: inline-block; margin-bottom: var(--esp-4); padding: var(--esp-1) var(--esp-3); border: 1px solid rgba(255,255,255,.5); border-radius: 999px; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
@@ -56,6 +62,39 @@
 .hero__imagem { background: #f1f1f1; border-radius: var(--raio-grande); overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,.35); transform: rotate(-1.5deg); animation: hero-sobe .9s .15s var(--curva) both; }
 @keyframes hero-sobe { from { transform: translateY(30px) rotate(-1.5deg); opacity: 0; } to { transform: rotate(-1.5deg); opacity: 1; } }
 .hero__legenda { margin: 0; padding: var(--esp-2) var(--esp-4); background: #fff; color: var(--cor-texto-suave); font-size: .85rem; }
+
+/* ---------- Ondas orgânicas (fim do hero e topo do rodapé) ---------- */
+:root { --onda-altura: clamp(56px, 8vw, 120px); }
+.onda { display: block; width: 100%; height: var(--onda-altura); overflow: visible; }
+.onda__fundo { stroke: none; }
+.onda__linha { fill: none; stroke: var(--everest-bordo); stroke-width: 3; vector-effect: non-scaling-stroke; stroke-linecap: round; }
+.onda__linha--clara { stroke: rgba(255,255,255,.55); stroke-width: 1.5; }
+.onda__linha--clara-escura { stroke: rgba(32,47,100,.35); stroke-width: 1.5; }
+.onda--espera .onda__linha { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.onda--espera.onda--desenha .onda__linha { stroke-dashoffset: 0; transition: stroke-dashoffset 1.6s var(--curva); }
+.onda--espera.onda--desenha .onda__linha--clara, .onda--espera.onda--desenha .onda__linha--clara-escura { transition-delay: .25s; }
+.onda--hero { position: absolute; left: 0; right: 0; bottom: -1px; }
+.onda--hero .onda__fundo { fill: var(--cor-fundo-suave); }
+.onda--rodape { margin-top: calc(-1 * var(--onda-altura) + 1px); position: relative; }
+.onda--rodape .onda__fundo { fill: var(--everest-azul); }
+
+/* ---------- Abertura (página inicial, uma vez por sessão) ---------- */
+.abertura { display: none; }
+html.com-abertura .abertura { display: block; position: fixed; inset: 0; z-index: 200; background: var(--everest-bordo); pointer-events: none;
+  animation: abertura-revela .8s 1.45s cubic-bezier(.7,0,.2,1) forwards, abertura-some 0s 2.3s forwards; }
+.abertura__capa { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: var(--esp-5); background: var(--everest-azul);
+  animation: abertura-revela .8s 1.3s cubic-bezier(.7,0,.2,1) forwards; }
+.abertura__centro { position: relative; width: 168px; height: 168px; display: grid; place-items: center; }
+.abertura__centro img { width: 112px; height: auto; animation: abertura-escudo .9s .15s var(--curva) both; }
+.abertura__anel { position: absolute; inset: 0; transform: rotate(-90deg); }
+.abertura__anel circle { fill: none; stroke: #fff; stroke-width: 2.5; stroke-dasharray: 1; stroke-dashoffset: 1; animation: abertura-anel 1.1s .1s var(--curva) forwards; }
+.abertura__texto { margin: 0; color: #e2e6f3; font-size: .8rem; letter-spacing: .22em; text-transform: uppercase; animation: abertura-texto .7s .55s var(--curva) both; }
+@keyframes abertura-revela { from { clip-path: ellipse(80% 140% at 50% 0%); } to { clip-path: ellipse(80% 0% at 50% 0%); } }
+@keyframes abertura-some { to { visibility: hidden; } }
+@keyframes abertura-anel { to { stroke-dashoffset: 0; } }
+@keyframes abertura-escudo { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: none; } }
+@keyframes abertura-texto { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { html.com-abertura .abertura { display: none; } }
 
 /* ---------- Seções ---------- */
 .secao { padding: var(--esp-8) 0; }
@@ -148,7 +187,8 @@
 .duvidas details > div { padding: 0 var(--esp-5) var(--esp-4); color: var(--cor-texto-suave); }
 
 /* ---------- Rodapé ---------- */
-.rodape { background: var(--everest-azul); color: #e2e6f3; padding-top: var(--esp-7); }
+.rodape { display: flow-root; background: var(--everest-azul); color: #e2e6f3; padding-top: 0; margin-top: var(--onda-altura); } /* flow-root: a onda sobe para a seção de cima */
+.rodape__grade { padding-top: var(--esp-5); }
 .rodape a { color: #fff; }
 .rodape a:hover { color: #ffd9da; }
 .rodape__grade { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: var(--esp-6); padding-bottom: var(--esp-6); }
@@ -327,7 +367,7 @@ pre.json { max-height: 320px; overflow: auto; padding: var(--esp-3); background:
   .topo__marcas img.everest { width: 130px; }
   .topo__marcas img.ardos { width: 36px; }
   .hero__grade, .chamada, .produto, .carrinho { grid-template-columns: 1fr; }
-  .hero__grade { padding: var(--esp-7) 0; }
+  .hero__grade { padding: var(--esp-7) 0 calc(var(--esp-7) + var(--onda-altura) * .5); }
   .produto__galeria { position: static; }
   .medidas__corpo { grid-template-columns: 1fr; }
   .medidas__desenho { max-width: 200px; margin-inline: auto; }
@@ -335,6 +375,8 @@ pre.json { max-height: 320px; overflow: auto; padding: var(--esp-3); background:
   .chamada { padding: var(--esp-5); }
 }
 @media (max-width: 600px) {
+  .faixa-escola__texto { display: none; }
+  .faixa-escola__lema { border-right: 0; }
   .passos { grid-template-columns: 1fr; }
   .rodape__grade { grid-template-columns: 1fr; }
   .pessoa { grid-template-columns: repeat(2, minmax(0, 1fr)); }

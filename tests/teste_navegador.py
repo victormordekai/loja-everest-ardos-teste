@@ -148,6 +148,18 @@ with sync_playwright() as p:
     pg.goto(BASE + "pages/produto.html#%3Cscript%3E"); checar(pg.is_visible("[data-nao-encontrado]"), "slug inválido mostra não encontrado")
     checar(not erros, f"fluxo: console sem erro/aviso {erros[:3]}")
     ctx.close()
+    # Abertura: uma vez por sessão; some com "reduzir movimento"
+    ctx = nav.new_context(viewport={"width": 1280, "height": 800}); pg = ctx.new_page()
+    pg.goto(BASE + "index.html"); pg.wait_for_timeout(300)
+    checar(pg.is_visible(".abertura"), "abertura aparece na primeira visita")
+    pg.wait_for_timeout(2400); checar(not pg.is_visible(".abertura"), "abertura some sozinha")
+    pg.reload(); pg.wait_for_timeout(300); checar(not pg.is_visible(".abertura"), "abertura não repete na mesma sessão")
+    checar(pg.locator(".onda--hero").count() == 1 and pg.locator(".onda--rodape").count() == 1, "ondas no hero e no rodapé")
+    checar(pg.is_visible(".faixa-escola") and "Site do Colégio" in pg.inner_text(".faixa-escola"), "faixa do ecossistema do Colégio")
+    ctx.close()
+    ctx = nav.new_context(viewport={"width": 1280, "height": 800}, reduced_motion="reduce"); pg = ctx.new_page()
+    pg.goto(BASE + "index.html"); pg.wait_for_timeout(300); checar(not pg.is_visible(".abertura"), "sem abertura com reduzir movimento")
+    ctx.close()
     # Celular: menu
     ctx = nav.new_context(viewport={"width": 390, "height": 844}, has_touch=True); pg = ctx.new_page()
     pg.goto(BASE + "index.html"); pg.click(".topo__menu")

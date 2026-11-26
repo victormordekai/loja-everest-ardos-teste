@@ -38,12 +38,28 @@
 <script src="assets/js/nucleo/divisao.js" defer></script>
 <script src="assets/js/nucleo/carrinho.js" defer></script>
 <script src="assets/js/comum.js" defer></script>
+<script src="assets/js/abertura.js"></script>
 <script src="assets/js/paginas/inicio.js" defer></script>
 </head>
 <body data-raiz="">
+<div class="abertura" aria-hidden="true">
+  <div class="abertura__capa">
+    <div class="abertura__centro">
+      <svg class="abertura__anel" viewBox="0 0 120 120" focusable="false"><circle cx="60" cy="60" r="56" pathLength="1"/></svg>
+      <img src="assets/img/marcas/everest_redondo_branco.webp" alt="" width="360" height="358">
+    </div>
+    <p class="abertura__texto">Loja oficial · Colégio Everest × ARDOS</p>
+  </div>
+</div>
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 <div class="faixa-teste" role="note">
   <p class="casca"><strong>Versão de teste.</strong> Nenhum pagamento é processado e nenhum dado é enviado. Os valores mostrados são de teste; preços e data de retirada ainda serão definidos.</p>
+</div>
+<div class="faixa-escola">
+  <div class="casca faixa-escola__barra">
+    <p><span class="faixa-escola__lema">Semper Altius</span><span class="faixa-escola__texto">Loja oficial de uniformes esportivos do Colégio Everest, em parceria com a ARDOS</span></p>
+    <a href="https://www.colegioeverest.curitiba.br/pt-br/home" target="_blank" rel="noopener noreferrer">Site do Colégio <span aria-hidden="true">↗</span><span class="sr-only">(abre em nova aba)</span></a>
+  </div>
 </div>
 <header class="topo">
   <div class="casca topo__barra">
@@ -69,7 +85,7 @@
   <section class="hero" aria-labelledby="hero-titulo">
     <div class="casca hero__grade">
       <div>
-        <span class="hero__selo">Loja oficial · uniformes esportivos</span>
+        <span class="hero__selo">Semper Altius · loja oficial de uniformes</span>
         <h1 id="hero-titulo">Uniformes do Colégio Everest<span>feitos pela ARDOS.</span></h1>
         <p class="hero__texto">Escolha a peça, informe tamanho, nome e número e retire na escola. Dá para comprar só para você ou para o time inteiro, e dividir o pagamento em até 3 cartões.</p>
         <div class="hero__acoes">
@@ -82,6 +98,11 @@
         <figcaption class="hero__legenda">Kit oficial, já lançado na escola. Imagem ilustrativa: a produção segue a arte aprovada.</figcaption>
       </figure>
     </div>
+    <svg class="onda onda--hero" data-onda viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path class="onda__fundo" d="M0,70 C220,118 430,8 720,46 C1000,84 1210,126 1440,58 L1440,120 L0,120 Z"/>
+      <path class="onda__linha" pathLength="1" d="M0,56 C220,104 430,-6 720,32 C1000,70 1210,112 1440,44"/>
+      <path class="onda__linha onda__linha--clara" pathLength="1" d="M0,40 C240,84 440,-18 720,16 C990,50 1220,96 1440,28"/>
+    </svg>
   </section>
 
   <section class="secao secao--suave" id="como-funciona" aria-labelledby="como-titulo">
@@ -157,6 +178,11 @@
 
 </main>
 <footer class="rodape">
+  <svg class="onda onda--rodape" data-onda viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path class="onda__linha onda__linha--clara-escura" pathLength="1" d="M0,58 C260,6 560,96 860,52 C1100,18 1290,22 1440,60"/>
+    <path class="onda__linha" pathLength="1" d="M0,74 C260,22 560,112 860,68 C1100,34 1290,38 1440,76"/>
+    <path class="onda__fundo" d="M0,88 C260,36 560,126 860,82 C1100,48 1290,52 1440,90 L1440,121 L0,121 Z"/>
+  </svg>
   <div class="casca rodape__grade">
     <div>
       <div class="rodape__marcas">
@@ -194,7 +220,7 @@
   </div>
   <div class="casca rodape__base">
     <span>© 2026 ARDOS. Marca Colégio Everest usada em parceria com a escola.</span>
-    <span>Loja Everest × ARDOS · versão v0.3.0 · teste · 26/11/2026</span>
+    <span>Loja Everest × ARDOS · versão v0.4.0 · teste · 26/11/2026</span>
   </div>
 </footer>
 </body>

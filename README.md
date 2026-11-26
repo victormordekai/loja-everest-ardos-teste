@@ -1,4 +1,4 @@
-# Loja oficial Colégio Everest × ARDOS · v0.3.0 (teste)
+# Loja oficial Colégio Everest × ARDOS · v0.4.0 (teste)
 
 Loja de uniformes esportivos personalizados do Colégio Everest, produzidos e vendidos pela ARDOS.
 **Versão de teste:** nada é enviado nem cobrado. Todos os produtos usam o valor de teste R$ 100,00; preços reais, tabela de medidas e data de retirada ainda não estão definidos.

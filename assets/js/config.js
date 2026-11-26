@@ -4,7 +4,7 @@
  */
 window.LOJA = window.LOJA || {};
 window.LOJA.config = Object.freeze({
-  versao: 'v0.3.0',
+  versao: 'v0.4.0',
   ambiente: 'TESTE',                 // TESTE: nada é enviado nem cobrado
   dataVersao: '26/11/2026',
 

@@ -23,6 +23,16 @@
     LOJA.$$('[data-contador]').forEach(c => { c.textContent = String(n); });
     LOJA.$$('.topo__carrinho').forEach(a => a.setAttribute('aria-label', `Carrinho: ${n} ${n === 1 ? 'item' : 'itens'}`));
   }
+  // Ondas: a linha bordô se desenha quando a onda aparece na tela (sem JS ou com "reduzir movimento", fica pronta)
+  const ondas = LOJA.$$('[data-onda]');
+  if (ondas.length && 'IntersectionObserver' in window && !LOJA.reduzirMovimento()) {
+    ondas.forEach(o => o.classList.add('onda--espera'));
+    const obsOnda = new IntersectionObserver(entradas => entradas.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('onda--desenha'); obsOnda.unobserve(e.target); }
+    }), { threshold: 0.3 });
+    ondas.forEach(o => obsOnda.observe(o));
+  }
+
   document.addEventListener('carrinho:mudou', atualizarContador);
   window.addEventListener('storage', atualizarContador);
   atualizarContador();
