@@ -111,7 +111,8 @@
     const { linhas, semPreco } = LOJA.carrinho.linhasCobraveis(carrinho, estado.simular);
     const precisaSimular = semPreco > 0 || (estado.simular && LOJA.produtos.some(p => p.precoCentavos === null));
     $('[data-sem-preco]').hidden = !precisaSimular;
-    $('[data-simulacao-aviso]').hidden = !estado.simular;
+    const temValorTeste = carrinho.itens.some(i => (i.tipo === 'individual' ? [i.slug] : i.equipes.map(e => e.slug)).some(s => { const p = LOJA.produtoPorSlug(s); return p && p.precoTeste; }));
+    $('[data-simulacao-aviso]').hidden = !(estado.simular || temValorTeste);
     const caixa = $('[data-cobrancas]'); caixa.textContent = ''; blocosCobranca = [];
     if (semPreco > 0) {
       caixa.append(el('p', { class: 'aviso', text: 'A divisão aparece aqui quando os preços estiverem definidos (ou com a simulação ligada).' }));
@@ -187,7 +188,7 @@
       schema: 'everest.ardos.loja.pedido.teste.v1',
       ambiente: 'TESTE', aviso: 'Pedido de teste: não foi enviado, não gera cobrança e não é pedido oficial da ARDOS.',
       codigoTeste: codigo, geradoEm: new Date().toISOString(), versaoLoja: LOJA.config.versao,
-      valoresFicticios: estado.simular, modoPagamento: estado.modo,
+      valoresFicticios: estado.simular || !$('[data-simulacao-aviso]').hidden, modoPagamento: estado.modo,
       retirada: { local: LOJA.config.retirada.local, aluno: dados.aluno.trim(), turma: dados.turma.trim(), unidade: dados.unidade },
       responsavel: { nome: dados.responsavel.trim(), email: dados.email.trim(), telefone: dados.telefone.trim() },
       itens: carrinho.itens.map(i => i.tipo === 'individual' ? { tipo: i.tipo, produto: i.slug, unidades: i.unidades } : { tipo: i.tipo, equipes: i.equipes }),

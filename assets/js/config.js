@@ -4,7 +4,7 @@
  */
 window.LOJA = window.LOJA || {};
 window.LOJA.config = Object.freeze({
-  versao: 'v0.1.0',
+  versao: 'v0.2.0',
   ambiente: 'TESTE',                 // TESTE: nada é enviado nem cobrado
   dataVersao: '26/11/2026',
 
@@ -12,6 +12,14 @@ window.LOJA.config = Object.freeze({
   maxLinksPorCobranca: 3,            // até 3 cartões/links por cobrança
   valorMinimoPorLinkCentavos: 100,   // R$ 1,00 — mínimo real depende do meio de pagamento: PENDENTE
   parcelasMaximasCartao: null,       // PENDENTE (o Clube Curitibano usa até 6x; não vale para este cliente sem decisão)
+
+  // Produtos em desenvolvimento podem ser comprados só na versão de teste (para validar pedidos).
+  vendaEmDesenvolvimentoNoTeste: true,
+  mensagens: {
+    emDesenvolvimento: 'Produto em desenvolvimento',
+    emDesenvolvimentoDetalhe: 'Em breve, descrições e valores atualizados.',
+    indisponivel: 'Produto sem estoque ou fora do catálogo'
+  },
 
   // Simulação: preços ainda não definidos. Valor fictício, só para testar a divisão.
   precoSimulacaoCentavos: 10000,     // R$ 100,00 por item — FICTÍCIO

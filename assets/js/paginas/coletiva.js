@@ -51,7 +51,7 @@
   function novaEquipe(focar) {
     contadorEquipes++;
     const idNome = 'equipe-nome-' + contadorEquipes, idProduto = 'equipe-produto-' + contadorEquipes;
-    const seletor = el('select', { id: idProduto, name: 'produto' }, LOJA.produtos.map(p => el('option', { value: p.slug, text: p.nome })));
+    const seletor = el('select', { id: idProduto, name: 'produto' }, LOJA.produtos.filter(LOJA.podeVender).map(p => el('option', { value: p.slug, text: p.nome + (p.situacao === 'em-desenvolvimento' ? ' (em desenvolvimento)' : '') })));
     const equipe = el('section', { class: 'equipe', role: 'group' },
       el('div', { class: 'equipe__topo' },
         el('h2', { text: 'Equipe' }),

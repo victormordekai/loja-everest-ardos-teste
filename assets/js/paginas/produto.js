@@ -24,8 +24,12 @@
     ? 'Imagem ilustrativa (mockup neutro). A foto do produto com a arte do Colégio Everest entra aqui.'
     : 'Imagem ilustrativa. A produção segue a arte aprovada.';
   const preco = $('[data-preco]');
-  if (Number.isInteger(produto.precoCentavos)) preco.textContent = LOJA.divisao.formatarBRL(produto.precoCentavos) + ' por peça';
-  else { preco.textContent = 'Preço a definir'; preco.classList.add('preco--pendente'); }
+  preco.textContent = LOJA.textoPreco(produto) + (Number.isInteger(produto.precoCentavos) ? ' por peça' : '');
+  if (!Number.isInteger(produto.precoCentavos) || produto.precoTeste) preco.classList.add('preco--pendente');
+  const M = LOJA.config.mensagens; const situacao = $('[data-situacao]');
+  if (produto.situacao === 'em-desenvolvimento') { situacao.hidden = false; situacao.textContent = `${M.emDesenvolvimento}. ${M.emDesenvolvimentoDetalhe}` + (LOJA.podeVender(produto) ? ' Nesta versão de teste, você já pode montar o pedido.' : ''); }
+  if (produto.situacao === 'indisponivel') { situacao.hidden = false; situacao.textContent = M.indisponivel + '.'; }
+  if (!LOJA.podeVender(produto)) { $('[data-montar]').hidden = true; }
   LOJA.config.tamanhos.adulto.forEach(t => $('[data-tam-adulto]').append(el('span', { text: t })));
   LOJA.config.tamanhos.infantil.forEach(t => $('[data-tam-infantil]').append(el('span', { text: t })));
   $('[data-aviso-personalizacao]').hidden = produto.personalizacaoConfirmada;

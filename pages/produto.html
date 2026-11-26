@@ -26,7 +26,7 @@
 <body data-raiz="../">
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 <div class="faixa-teste" role="note">
-  <p class="casca"><strong>Versão de teste.</strong> Nenhum pagamento é processado e nenhum dado é enviado. Preços, data de retirada e tabela de medidas ainda serão definidos.</p>
+  <p class="casca"><strong>Versão de teste.</strong> Nenhum pagamento é processado e nenhum dado é enviado. Os valores mostrados são de teste; preços, data de retirada e tabela de medidas ainda serão definidos.</p>
 </div>
 <header class="topo">
   <div class="casca topo__barra">
@@ -74,6 +74,7 @@
       <p class="produto__ref" data-ref></p>
       <h1 data-nome>Produto</h1>
       <p data-preco class="produto__preco"></p>
+      <p class="aviso" data-situacao hidden></p>
       <p data-descricao></p>
       <ul class="produto__composicao" data-composicao></ul>
 
@@ -88,7 +89,7 @@
         </table>
       </section>
 
-      <section class="produto__bloco" aria-labelledby="pedido-titulo">
+      <section class="produto__bloco" aria-labelledby="pedido-titulo" data-montar>
         <h2 id="pedido-titulo">Monte seu pedido</h2>
         <p>Uma linha por peça. Para comprar para mais de uma pessoa, adicione outra linha.</p>
         <p class="aviso" data-aviso-personalizacao hidden>Os campos de personalização desta peça ainda serão confirmados com a equipe de Design da ARDOS.</p>
@@ -149,7 +150,7 @@
   </div>
   <div class="casca rodape__base">
     <span>© 2026 ARDOS. Marca Colégio Everest usada em parceria com a escola.</span>
-    <span>Loja Everest × ARDOS · versão v0.1.0 · teste · 26/11/2026</span>
+    <span>Loja Everest × ARDOS · versão v0.2.0 · teste · 26/11/2026</span>
   </div>
 </footer>
 </body>

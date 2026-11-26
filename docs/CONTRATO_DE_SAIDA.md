@@ -61,7 +61,7 @@ Tom: claro, não técnico; acolhedor, não infantil; institucional, não burocr�
 
 | # | Pendência | Responsável | Prazo |
 |---|---|---|---|
-| 1 | Preço de cada produto | Comercial / Diretoria | a definir |
+| 1 | Preço de cada produto (hoje: valor de teste R$ 100,00, decisão de Victor em 26/11/2026) | Comercial / Diretoria | a definir |
 | 2 | Tamanhos disponíveis por peça e tabela de medidas | Design / Produção | a definir |
 | 3 | Campos de personalização por peça (exceto kit oficial) | Design | a definir |
 | 4 | Variantes de cor | Design | a definir |

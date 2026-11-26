@@ -13,23 +13,33 @@
   let filtroAtual = 'todos';
 
   function precoTexto(produto) {
-    return Number.isInteger(produto.precoCentavos)
-      ? el('span', { class: 'preco', text: LOJA.divisao.formatarBRL(produto.precoCentavos) })
-      : el('span', { class: 'preco preco--pendente', text: 'Preço a definir' });
+    if (!Number.isInteger(produto.precoCentavos)) return el('span', { class: 'preco preco--pendente', text: 'Preço a definir' });
+    return el('span', { class: 'preco' }, LOJA.divisao.formatarBRL(produto.precoCentavos),
+      produto.precoTeste ? el('small', { class: 'preco__nota', text: 'valor de teste' }) : null);
+  }
+
+  /** Aviso sobre a foto: produto em desenvolvimento ou fora do catálogo. */
+  function avisoSituacao(produto) {
+    const M = LOJA.config.mensagens;
+    if (produto.situacao === 'em-desenvolvimento') return el('span', { class: 'cartao__aviso' }, el('strong', { text: M.emDesenvolvimento }), el('span', { text: M.emDesenvolvimentoDetalhe }));
+    if (produto.situacao === 'indisponivel') return el('span', { class: 'cartao__aviso' }, el('strong', { text: M.indisponivel }));
+    return null;
   }
 
   function cartaoProduto(produto) {
     const seloTexto = produto.selo || (produto.imagem.tipo === 'mockup' ? 'Imagem ilustrativa' : null);
-    return el('article', { class: 'cartao', dataset: { categoria: produto.categoria, chave: produto.slug } },
+    const classeSituacao = produto.situacao === 'em-desenvolvimento' ? ' cartao--em-breve' : produto.situacao === 'indisponivel' ? ' cartao--em-breve cartao--indisponivel' : '';
+    return el('article', { class: 'cartao' + classeSituacao, dataset: { categoria: produto.categoria, chave: produto.slug } },
       el('div', { class: 'cartao__midia' + (produto.imagem.fundo === 'claro' ? ' cartao__midia--clara' : '') },
         seloTexto ? el('span', { class: 'selo' + (produto.selo ? ' selo--oficial' : ''), text: seloTexto }) : null,
         el('img', { src: LOJA.imagemProduto(produto), alt: produto.imagem.alt, loading: 'lazy', decoding: 'async', width: '800', height: '600' }),
+        avisoSituacao(produto),
         el('span', { class: 'cartao__faixa', 'aria-hidden': 'true' })),
       el('div', { class: 'cartao__corpo' },
         el('span', { class: 'cartao__ref', text: `REF ${produto.ref} · ${LOJA.categorias[produto.categoria]}` }),
         el('h3', { class: 'cartao__nome' }, el('a', { href: LOJA.paginaProduto(produto), text: produto.nome })),
         el('p', { class: 'cartao__resumo', text: produto.resumo }),
-        el('div', { class: 'cartao__rodape' }, precoTexto(produto), el('span', { class: 'cartao__acao', 'aria-hidden': 'true', text: 'Escolher →' }))));
+        el('div', { class: 'cartao__rodape' }, precoTexto(produto), el('span', { class: 'cartao__acao', 'aria-hidden': 'true', text: LOJA.podeVender(produto) ? 'Escolher →' : 'Ver →' }))));
   }
 
   function cartaoColetiva() {

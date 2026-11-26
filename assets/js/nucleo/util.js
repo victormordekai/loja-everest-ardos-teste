@@ -30,6 +30,20 @@
 
   function produtoPorSlug(slug) { return LOJA.produtos.find(p => p.slug === slug) || null; }
 
+  /** Pode ser colocado no carrinho? Indisponível nunca; em desenvolvimento só na versão de teste. */
+  function podeVender(produto) {
+    const s = produto.situacao || 'disponivel';
+    if (s === 'indisponivel') return false;
+    if (s === 'em-desenvolvimento') return LOJA.config.ambiente === 'TESTE' && LOJA.config.vendaEmDesenvolvimentoNoTeste;
+    return true;
+  }
+
+  /** Preço para exibir: "R$ 100,00 · valor de teste", "R$ 188,00" ou "Preço a definir". */
+  function textoPreco(produto) {
+    if (!Number.isInteger(produto.precoCentavos)) return 'Preço a definir';
+    return LOJA.divisao.formatarBRL(produto.precoCentavos) + (produto.precoTeste ? ' · valor de teste' : '');
+  }
+
   /** Texto para nome/variante: caixa alta, sem caracteres de controle (como na Grade Web do Portal). */
   function textoMaiusculo(valor) {
     return String(valor || '').normalize('NFC')
@@ -44,5 +58,5 @@
 
   const reduzirMovimento = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  Object.assign(LOJA, { el, $, $$, raiz, imagemProduto, paginaProduto, produtoPorSlug, textoMaiusculo, novoId, reduzirMovimento });
+  Object.assign(LOJA, { el, $, $$, raiz, imagemProduto, paginaProduto, produtoPorSlug, podeVender, textoPreco, textoMaiusculo, novoId, reduzirMovimento });
 })();
