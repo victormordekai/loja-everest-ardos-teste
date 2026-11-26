@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Banner de compartilhamento · Loja Everest × ARDOS</title>
+<!-- Fonte do banner de compartilhamento (1200 × 630). Gerado por tools/gerar_banner.py; não é página do site. -->
+<link rel="stylesheet" href="../../assets/css/tokens.css">
+<style>
+  html, body { margin: 0; }
+  .banner { position: relative; width: 1200px; height: 630px; overflow: hidden; background: var(--everest-azul); color: #fff; font-family: var(--fonte-texto); }
+  .banner::before { content: ""; position: absolute; top: -120px; right: -80px; width: 760px; height: 900px;
+    background: linear-gradient(115deg, transparent 0 38%, var(--everest-bordo) 38% 54%, transparent 54% 58%, rgba(255,255,255,.14) 58% 62%, transparent 62%); }
+  .texto { position: absolute; left: 72px; top: 64px; width: 560px; }
+  .marcas { display: flex; align-items: center; gap: 22px; margin-bottom: 44px; }
+  .marcas .everest { width: 250px; }
+  .marcas .ardos { width: 78px; }
+  .marcas .vezes { font-size: 28px; color: #c6cde4; }
+  h1 { margin: 0 0 18px; font-family: var(--fonte-titulo); font-size: 58px; line-height: 1.05; letter-spacing: -0.01em; }
+  h1 span { display: block; color: #ffd9da; font-style: italic; }
+  p { margin: 0 0 26px; font-size: 24px; line-height: 1.35; color: #e2e6f3; }
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  li { padding: 8px 16px; border: 1px solid rgba(255,255,255,.55); border-radius: 999px; font-size: 18px; font-weight: 600; }
+  .foto { position: absolute; right: 56px; top: 92px; width: 520px; border-radius: 18px; overflow: hidden; background: #f1f1f1; box-shadow: 0 30px 60px rgba(0,0,0,.35); transform: rotate(-2deg); }
+  .foto img { display: block; width: 100%; }
+  .selo { position: absolute; right: 56px; bottom: 40px; padding: 6px 14px; border-radius: 8px; background: #fff6dc; color: #1d1c1e; font-size: 16px; font-weight: 700; }
+</style>
+</head>
+<body>
+  <div class="banner">
+    <div class="texto">
+      <div class="marcas">
+        <img class="everest" src="../../assets/img/marcas/everest_horizontal_branco.webp" alt="Colégio Everest Internacional">
+        <span class="vezes">×</span>
+        <img class="ardos" src="../../assets/img/marcas/ardos_logo_branco.svg" alt="ARDOS">
+      </div>
+      <h1>Uniformes do Colégio Everest<span>feitos pela ARDOS.</span></h1>
+      <p>Loja oficial de uniformes esportivos personalizados, com retirada na escola.</p>
+      <ul><li>Para você ou para o time</li><li>Até 3 cartões</li><li>Nome e número</li></ul>
+    </div>
+    <div class="foto"><img src="../../assets/img/produtos/kit-oficial-everest.webp" alt="Kit oficial Colégio Everest × ARDOS"></div>
+    <span class="selo">Versão de teste</span>
+  </div>
+</body>
+</html>

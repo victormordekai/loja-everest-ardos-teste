@@ -41,6 +41,11 @@ python3 -m http.server 8000
 
 Não edite `index.html` e `pages/*.html` direto: eles são gerados.
 
+## Compartilhamento (WhatsApp e redes sociais)
+- Banner: `assets/img/compartilhar/banner_1200x630.jpg` (1200 × 630, JPEG). Para refazer: edite `tools/banner/banner.html` e rode `python3 tools/gerar_banner.py`.
+- Os metadados (Open Graph e X/Twitter) usam o endereço completo do site, definido em `URL_BASE` no `tools/montar_paginas.py`. Mudou o domínio? Troque ali e rode `python3 tools/montar_paginas.py`.
+- O link só mostra o banner depois que o GitHub Pages estiver ligado (Settings → Pages → Deploy from a branch → `main` / raiz).
+
 ## Testes
 ```
 node --test tests/divisao.test.js          # regras de divisão do pagamento
